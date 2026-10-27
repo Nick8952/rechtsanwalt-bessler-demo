@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+/*
+ * Gestaltung «Randnotiz» (siehe docs/DESIGN.md).
+ * Aus der Welt des Mandanten abgeleitet: Rechtstexte mit Randtiteln, ein Anwalt, der schreibt und liest (Rezension,
+ * Seminararbeit), bunte Buchrücken im Kanzleiportrait. Daraus folgt ein ruhiges Papier als Grund, eine warme dunkle Tinte und
+ * genau ein Akzent: ein tiefes Grün. Die Randspalte ist das wiederkehrende Zeichen: Sie trägt Randnotizen, Inhaltsverzeichnisse
+ * und Bildlegenden, nie Dekoration. Zwei Schriften mit festen Rollen: Newsreader (Titel, Randnotizen, Zitate), Hanken Grotesk
+ * (Navigation, Lauftext, Bedienelemente). Alles kantig (Radius 0). Helles Theme als Grundlage, dunkles Theme über dieselben Tokens.
+ */
+@theme {
+  --color-papier: #f7f6f2;
+  --color-flaeche: #fdfdfb;
+  --color-flaeche-2: #eeece6;
+  --color-tinte: #1b1c1a;
+  --color-tinte-2: #4b4d47;
+  --color-grau: #676961;
+  --color-linie: #dcd9d1;
+  --color-linie-stark: #8c887b;
+  --color-akzent: #1f5c47;
+  --color-akzent-tief: #163f32;
+  --color-akzent-hell: #e3ece7;
+  --color-knopf: #1f5c47;
+  --color-knopf-text: #f7f6f2;
+  --color-fehler: #a3261b;
+
+  --font-serif: var(--schrift-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--schrift-sans), "Helvetica Neue", Arial, sans-serif;
+
+  --spacing-rand: clamp(1rem, 4vw, 2.5rem);
+  --ease-aus: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Dunkles Theme: dieselben Rollen, andere Werte. Keine Section invertiert von sich aus; der Wechsel gilt für die ganze Seite. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-papier: #151614;
+    --color-flaeche: #1b1c1a;
+    --color-flaeche-2: #232421;
+    --color-tinte: #ecebe4;
+    --color-tinte-2: #c2c1b9;
+    --color-grau: #a3a29a;
+    --color-linie: #2e302c;
+    --color-linie-stark: #6d7067;
+    --color-akzent: #8ccfb0;
+    --color-akzent-tief: #b3e0cb;
+    --color-akzent-hell: #1e2d26;
+    --color-knopf: #2d7a5f;
+    --color-knopf-text: #f7f6f2;
+    --color-fehler: #f09a8f;
+  }
+}
+
+@layer base {
+/* Ebenen (einzige z-index-Werte der Website): Einwilligungsbanner 40, Sprunglink 50. Dialoge liegen im Top-Layer. Die Kopfzeile ist nicht fixiert. */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light dark;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--color-papier);
+  color: var(--color-tinte);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+}
+
+img { max-width: 100%; height: auto; }
+
+::selection { background: var(--color-akzent-hell); color: var(--color-tinte); }
+
+:focus-visible {
+  outline: 3px solid var(--color-akzent);
+  outline-offset: 3px;
+}
+}
+
+/*
+ * Eigene Klassen liegen in der Ebene «components»: So können Tailwind-Utilities (hidden, lg:block, mt-8 …)
+ * sie gezielt übersteuern. Ohne Ebene würden sie jede Utility schlagen.
+ */
+@layer components {
+/* ── Raster ─────────────────────────────────────────────────────────── */
+.behaelter {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: var(--spacing-rand);
+}
+/* Dichte 3 (ruhig): 48 bis 96 px je Abschnitt, ein Rhythmus auf der ganzen Website */
+.abschnitt { padding-block: clamp(3rem, 7vw, 6rem); }
+.abschnitt-knapp { padding-block: clamp(2rem, 4vw, 3rem); }
+.trenner { border-top: 1px solid var(--color-linie); }
+
+/* Die Randspalte: links schmal (Randnotiz, Inhaltsverzeichnis, Bildlegende), rechts der Inhalt. Unter 64 rem eine Spalte. */
+.raster {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem 3rem;
+}
+@media (min-width: 64rem) {
+  .raster { grid-template-columns: 15rem minmax(0, 1fr); gap: 1.5rem 4rem; }
+}
+.rand-kleb { position: sticky; top: 1.5rem; }
+
+/* Einstieg: Text links, Portrait rechts in Originalgrösse (nie hochskaliert) */
+.hero-raster { display: grid; gap: 2.5rem; }
+@media (min-width: 64rem) {
+  .hero-raster { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; gap: 4rem; }
+}
+
+/* ── Schrift ────────────────────────────────────────────────────────── */
+.titel-1, .titel-2, .titel-3 { font-family: var(--font-serif); font-weight: 500; text-wrap: balance; letter-spacing: -0.005em; }
+.titel-1, .titel-2 { hyphens: manual; overflow-wrap: anywhere; }
+.titel-1 { font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.6rem); line-height: 1.06; }
+.titel-2 { font-size: clamp(1.75rem, 1.35rem + 1.3vw, 2.5rem); line-height: 1.12; }
+.titel-3 { font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.6rem); line-height: 1.22; }
+.titel-4 { font-family: var(--font-sans); font-size: 1.0625rem; line-height: 1.3; font-weight: 600; }
+.vorspann { font-size: clamp(1.125rem, 1rem + 0.45vw, 1.3rem); line-height: 1.5; color: var(--color-tinte-2); max-width: 52ch; text-wrap: pretty; }
+.lauftext { max-width: 62ch; text-wrap: pretty; }
+.klein { font-size: 0.9rem; line-height: 1.45; }
+.etikett { font-family: var(--font-sans); font-size: 0.9375rem; line-height: 1.35; font-weight: 500; color: var(--color-tinte-2); }
+.zahl { font-variant-numeric: tabular-nums; }
+
+/* Randnotiz: die Stimme am Rand, in der Serife, kursiv, ohne Linien */
+.randnotiz { font-family: var(--font-serif); font-style: italic; font-size: 1.125rem; line-height: 1.45; color: var(--color-tinte-2); text-wrap: pretty; }
+.randnotiz-liste { display: grid; gap: 0.25rem; }
+@media (min-width: 64rem) { .randnotiz { padding-top: 0.35rem; } }
+
+/* Leitfragen der bisherigen Einleitung: ein Satz je Zeile, in der Serife */
+.leitfragen { font-family: var(--font-serif); font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.85rem); line-height: 1.3; text-wrap: balance; display: grid; gap: 0.6rem; max-width: 30ch; }
+
+.textlink {
+  color: var(--color-akzent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-thickness 160ms var(--ease-aus);
+}
+.textlink:hover { text-decoration-thickness: 2px; color: var(--color-akzent-tief); }
+
+.nur-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* ── Knöpfe ─────────────────────────────────────────────────────────── */
+.knopf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  border-radius: 0;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background-color 180ms var(--ease-aus), border-color 180ms var(--ease-aus), color 180ms var(--ease-aus), transform 140ms var(--ease-aus);
+}
+.knopf:active { transform: scale(0.98); }
+.knopf-primaer { background: var(--color-knopf); color: var(--color-knopf-text); border-color: var(--color-knopf); }
+.knopf-primaer:hover { background: var(--color-akzent-tief); border-color: var(--color-akzent-tief); color: var(--color-knopf-text); }
+@media (prefers-color-scheme: dark) { .knopf-primaer:hover { background: var(--color-akzent); border-color: var(--color-akzent); color: var(--color-papier); } }
+.knopf-sekundaer { background: transparent; color: var(--color-tinte); border-color: var(--color-tinte); }
+.knopf-sekundaer:hover { background: var(--color-tinte); color: var(--color-papier); }
+.knopf-klein { min-height: 2.75rem; padding: 0.55rem 1rem; font-size: 0.9375rem; }
+.knopf-symbol { min-width: 2.75rem; padding-inline: 0.6rem; }
+@media (min-width: 40rem) { .knopf-symbol { padding-inline: 1rem; } }
+
+/* ── Kopfzeile und Wortmarke ────────────────────────────────────────── */
+.kopf { border-bottom: 1px solid var(--color-linie); }
+.wortmarke { display: inline-flex; align-items: baseline; gap: 0.6rem; min-height: 2.75rem; color: var(--color-tinte); }
+.wortmarke-name { font-family: var(--font-serif); font-weight: 500; font-size: 1.4rem; line-height: 1; letter-spacing: -0.005em; }
+.wortmarke-beruf { font-family: var(--font-sans); font-size: 0.9rem; line-height: 1; color: var(--color-tinte-2); }
+@media (max-width: 39.99rem) {
+  .wortmarke { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0.2rem; }
+  .wortmarke-name { font-size: 1.25rem; }
+  .wortmarke-beruf { font-size: 0.8rem; }
+  .knopf-menue { padding-inline: 0.7rem; gap: 0.4rem; }
+}
+.navlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.1rem;
+  font-weight: 500;
+  color: var(--color-tinte);
+  border-bottom: 2px solid transparent;
+  transition: border-color 160ms var(--ease-aus), color 160ms var(--ease-aus);
+}
+.navlink:hover { border-bottom-color: var(--color-linie-stark); }
+.navlink[aria-current="page"] { border-bottom-color: var(--color-akzent); color: var(--color-akzent); }
+
+/* ── Register der Rechtsgebiete: eine Zeile je Gebiet, Titel links in der Serife ─ */
+.register-zeile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem 2.5rem;
+  padding-block: 1.4rem;
+  border-top: 1px solid var(--color-linie);
+}
+.register-zeile:last-child { border-bottom: 1px solid var(--color-linie); }
+@media (min-width: 40rem) { .register-zeile { grid-template-columns: 12rem minmax(0, 1fr); } }
+
+/* ── Kontaktangaben ─────────────────────────────────────────────────── */
+.kontaktzeile { display: grid; gap: 1.25rem 2.5rem; }
+@media (min-width: 40rem) { .kontaktzeile { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.kontaktzeile dt, .kontaktblock dt { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--color-tinte-2); margin-bottom: 0.25rem; }
+.kontaktblock { display: grid; gap: 1rem; }
+.kontakt-link { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; font-weight: 600; color: var(--color-tinte); }
+.kontakt-link:hover { color: var(--color-akzent); }
+
+/* ── Hinweiskasten (Mandat, historische Texte) ──────────────────────── */
+.hinweis { background: var(--color-flaeche-2); border-left: 3px solid var(--color-akzent); padding: 0.9rem 1.1rem; max-width: 62ch; text-wrap: pretty; }
+
+/* ── Figuren ────────────────────────────────────────────────────────── */
+.figur figcaption { font-size: 0.9rem; line-height: 1.45; color: var(--color-grau); margin-top: 0.6rem; }
+
+/* ── Dialog (Menü) ──────────────────────────────────────────────────── */
+dialog.menue {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-papier);
+  color: var(--color-tinte);
+}
+dialog.menue::backdrop { background: color-mix(in srgb, var(--color-tinte) 50%, transparent); }
+@media (min-width: 64rem) {
+  dialog.menue { height: auto; max-height: 100dvh; width: 100vw; border-bottom: 2px solid var(--color-akzent); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.menue[open] { animation: menue-auf 220ms var(--ease-aus); }
+  @keyframes menue-auf { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+}
+dialog { border-radius: 0; }
+
+/* ── Formular ───────────────────────────────────────────────────────── */
+.feld { display: grid; gap: 0.4rem; }
+.feld label { font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; }
+.feld input, .feld select, .feld textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 0.8rem;
+  font: inherit;
+  color: var(--color-tinte);
+  background: var(--color-flaeche);
+  /* Feldrand mindestens 3:1 zum Grund (WCAG 1.4.11) */
+  border: 1.5px solid var(--color-linie-stark);
+  border-radius: 0;
+}
+.feld textarea { min-height: 8rem; resize: vertical; }
+.feld input:focus-visible, .feld select:focus-visible, .feld textarea:focus-visible { border-color: var(--color-akzent); outline-offset: 2px; }
+.feld [aria-invalid="true"] { border-color: var(--color-fehler); }
+.feld .hilfe { font-size: 0.875rem; color: var(--color-grau); }
+.feld .fehler { font-size: 0.9rem; font-weight: 600; color: var(--color-fehler); }
+
+/* ── Rich Text (Rechtsseiten) ───────────────────────────────────────── */
+.richtext { max-width: 68ch; }
+.richtext h2 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.7rem); line-height: 1.2; margin-top: 2.5rem; margin-bottom: 0.75rem; scroll-margin-top: 1.5rem; }
+.richtext h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.1rem; margin-top: 1.75rem; margin-bottom: 0.5rem; scroll-margin-top: 1.5rem; }
+.richtext h4 { font-family: var(--font-sans); font-weight: 600; font-size: 1rem; margin-top: 1.25rem; margin-bottom: 0.4rem; }
+.richtext p { margin-bottom: 1rem; text-wrap: pretty; }
+.richtext ul { list-style: disc; padding-left: 1.25rem; margin-bottom: 1rem; display: grid; gap: 0.4rem; }
+.richtext a { color: var(--color-akzent); text-decoration: underline; text-underline-offset: 0.2em; }
+.richtext blockquote { font-family: var(--font-serif); font-style: italic; padding-left: 1rem; border-left: 2px solid var(--color-linie-stark); margin-bottom: 1rem; }
+
+/* ── Artikel (Publikationen): lange Texte, 18 px, grosszügiger Zeilenabstand, begrenzte Zeilenlänge ─ */
+.artikel { max-width: 66ch; font-size: 1.125rem; line-height: 1.72; }
+@media (min-width: 48rem) { .artikel { font-size: 1.1875rem; } }
+.artikel p { margin-bottom: 1.15em; text-wrap: pretty; hyphens: auto; }
+.artikel h2, .artikel h3 { font-family: var(--font-serif); font-weight: 500; line-height: 1.18; text-wrap: balance; scroll-margin-top: 1.5rem; }
+.artikel h2 { font-size: clamp(1.6rem, 1.35rem + 0.9vw, 2.1rem); margin-top: 2.8em; margin-bottom: 0.7em; }
+.artikel h3 { font-size: clamp(1.3rem, 1.2rem + 0.4vw, 1.5rem); margin-top: 2.2em; margin-bottom: 0.6em; }
+.artikel h4 { font-family: var(--font-sans); font-weight: 600; font-size: 1.05em; margin-top: 1.8em; margin-bottom: 0.5em; scroll-margin-top: 1.5rem; }
+.artikel h2:first-child, .artikel h3:first-child { margin-top: 0; }
+/* Zitate: im Original kursiv und eingerückt; hier in der Serife, mit stiller Linie am Rand */
+.artikel blockquote { font-family: var(--font-serif); font-style: italic; font-size: 1.08em; line-height: 1.55; margin: 1.4em 0 1.4em 0; padding: 0.1em 0 0.1em 1.1em; border-left: 2px solid var(--color-linie-stark); color: var(--color-tinte); max-width: 60ch; text-wrap: pretty; }
+.artikel blockquote + blockquote { margin-top: -0.6em; }
+.artikel ul { list-style: disc; padding-left: 1.25rem; margin-bottom: 1.15em; display: grid; gap: 0.5em; }
+.artikel ul.literatur { list-style: none; padding-left: 0; }
+.artikel ul.literatur li { padding-left: 1.5em; text-indent: -1.5em; }
+.artikel a { color: var(--color-akzent); text-decoration: underline; text-underline-offset: 0.2em; }
+.artikel-kopf { max-width: 66ch; }
+
+/* ── Inhaltsverzeichnis (Randspalte, auf dem Handy aufklappbar) ─────── */
+.inhalt-liste { display: grid; gap: 0; font-size: 0.9375rem; line-height: 1.3; }
+.inhalt-liste a { display: flex; align-items: center; min-height: 2.75rem; padding: 0.3rem 0 0.3rem 0.6rem; border-left: 2px solid transparent; color: var(--color-tinte-2); text-wrap: pretty; }
+.inhalt-liste a:hover { color: var(--color-tinte); border-left-color: var(--color-linie-stark); }
+.inhalt-liste a[aria-current="true"] { color: var(--color-akzent); border-left-color: var(--color-akzent); font-weight: 600; }
+.inhalt-liste .stufe-3 a { padding-left: 1.4rem; }
+.inhalt-liste .stufe-4 a { padding-left: 2.2rem; font-size: 0.875rem; }
+.inhalt-scroll { max-height: calc(100dvh - 3rem); overflow-y: auto; overscroll-behavior: contain; padding-right: 0.25rem; }
+details.inhalt-mobil summary { display: flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; cursor: pointer; font-weight: 600; list-style: none; }
+details.inhalt-mobil summary::-webkit-details-marker { display: none; }
+details.inhalt-mobil summary::before { content: ""; width: 0.5rem; height: 0.5rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform 160ms var(--ease-aus); }
+details.inhalt-mobil[open] summary::before { transform: rotate(45deg); }
+
+/* ── Hover nur für Zeiger, die hovern können ────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  .zeile-link:hover .zeile-pfeil { transform: translateX(4px); }
+}
+.zeile-pfeil { transition: transform 200ms var(--ease-aus); }
+}
+
+/* ── Druckansicht: nur der Inhalt, keine Navigation, keine Randspalte ─ */
+@media print {
+  .kopf, .fuss, .rand, .kein-druck, dialog, .demo-hinweis { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; line-height: 1.5; }
+  .behaelter { max-width: none; padding: 0; }
+  .raster { display: block; }
+  .abschnitt { padding-block: 0; }
+  .artikel { max-width: none; font-size: 11pt; line-height: 1.5; }
+  .artikel p { margin-bottom: 0.8em; }
+  .artikel h2, .artikel h3, .artikel h4 { break-after: avoid; color: #000; }
+  .artikel blockquote { break-inside: avoid; border-left-color: #999; color: #000; }
+  a { color: inherit; text-decoration: none; }
+  .artikel a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
+  .titel-1 { font-size: 20pt; }
+  .vorspann, .etikett, .klein { color: #333; }
+}
