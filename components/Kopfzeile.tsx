@@ -12,8 +12,9 @@ export function Kopfzeile({ kanzlei: k, texte: t }: { kanzlei: Kanzlei; texte: T
   return (
     <header className="kopf">
       <div className="behaelter flex min-h-[4.25rem] items-center justify-between gap-4">
-        <Link href="/" aria-label={t.kopf.startLabel} className="shrink-0">
+        <Link href="/" className="shrink-0">
           <Wortmarke name={k.person} beruf={k.beruf} />
+          <span className="sr-only">, {t.kopf.startLabel}</span>
         </Link>
         <nav aria-label="Hauptnavigation" className="hidden lg:block">
           <ul className="flex items-center gap-7">

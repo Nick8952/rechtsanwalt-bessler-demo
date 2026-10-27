@@ -10,11 +10,12 @@ import { siteUrl } from "@/lib/deploy-ziel";
 import { indexierungErlaubt, jsonLdSicher, kanzleiJsonLd } from "@/lib/seo";
 
 // Schriften lokal aus den fontsource-Paketen (SIL Open Font License); keine Anfragen an fremde Server.
-// Newsreader «standard» trägt Gewicht und optische Grösse (opsz); Hanken Grotesk das Gewicht.
+// Newsreader aufrecht («standard») trägt Gewicht und optische Grösse (opsz) für die Titel. Die Kursive steht nur in Randnotizen und
+// Zitaten bei 18 bis 20 px, wo die optische Grösse nicht ins Gewicht fällt: dafür die «wght»-Datei (64 statt 147 KB). Hanken Grotesk: Gewicht.
 const schriftSerif = localFont({
   src: [
     { path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-standard-normal.woff2", style: "normal" },
-    { path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-standard-italic.woff2", style: "italic" },
+    { path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2", style: "italic" },
   ],
   weight: "200 800",
   variable: "--schrift-serif",
