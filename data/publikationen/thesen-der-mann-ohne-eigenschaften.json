@@ -1,0 +1,60 @@
+{
+ "slug": "thesen-der-mann-ohne-eigenschaften",
+ "art": "thesen",
+ "titel": "Thesen zum Roman «Der Mann ohne Eigenschaften» von Robert Musil",
+ "untertitel": null,
+ "kurztitel": "Thesen zum Roman: Der Mann ohne Eigenschaften",
+ "autor": "Michael Bessler",
+ "erschienen": null,
+ "erschienenText": null,
+ "quellenvermerk": null,
+ "seoTitel": "Thesen: Der Mann ohne Eigenschaften",
+ "seoBeschreibung": "Thesen von Michael Bessler zu Robert Musils Roman «Der Mann ohne Eigenschaften»: Moderne, Aufbegehren, Auflösung des Individuums und der Fall Moosbrugger.",
+ "reihenfolge": 30,
+ "quelleUrl": "https://www.rechtsanwaltbessler.ch/_der_mann_ohne_eigenschaften.html",
+ "abgerufen": "2026-10-27",
+ "herkunft": [
+  {
+   "quelle": "Bereich «Texte» der bisherigen Website, Wortlaut unverändert übernommen (Konverter: scripts/../docs/INHALTSMATRIX.md)",
+   "url": "https://www.rechtsanwaltbessler.ch/_der_mann_ohne_eigenschaften.html",
+   "abgerufen": "2026-10-27",
+   "art": "eigene-website"
+  }
+ ],
+ "freigabe": "demo",
+ "titelOriginal": "Thesen zum Roman\n„Der Mann ohne Eigenschaften“ von Robert Musil",
+ "quellenvermerkOriginal": null,
+ "bloecke": [
+  {
+   "art": "liste",
+   "punkte": [
+    [
+     "Der Beginn der Moderne lässt sich beschreiben als Verlust der Einheit, Verlust einer allgemeinen Kommunikation. Es wird die Auflösung gemeiner Werte erfahren. Wirklichkeit erscheint nicht zwingend und nur unzureichend begründbar. Wirklichkeit ist eine Möglichkeit von vielen."
+    ],
+    [
+     "Aufbegehren gegen die Moderne: Die Sehnsucht nach Reduktion von Komplexität treibt die Menschen zur Suche nach Einheit und letzten Werten. Romantische Schwärmereien, die Mission zum ‘reinigenden Kampfe’, oder rassistische, nationalistische Bewegungen reduzieren Komplexität und lassen sich deshalb als Formen von Antimodernismus beschreiben. Der Ruf nach der Tat, die Phaszination am Verbrechen scheinen den Ausweg aus der Ohnmacht zu zeigen. Der Krieg ist Telos des Romans."
+    ],
+    [
+     "Die Auflösung des [ganzheitlichen] Individuums: Der Mensch erfährt, dass es auf ihn in einer mit sich selbst beschäftigten Welt nicht ankommt. Er wird durch die übergeordneten Bewegungen der Gesellschaft mitgewälzt. Schicksal ist eine statistische Grösse. Persönliches verliert sich ans Unpersönliche. Eigenschaften haben sich von der Idee des Individuums gelöst. Die Zukunft gehört den „Summen von Gesichtern, diesen vom Körper gerissenen, untereinander zu Armeen von Armen, Beinen oder Zähnen zusammengefassten Bewegungen“. Im Erfüllen von abgegrenzten, gesellschaftlichen Funktionen kommen die persönlichen Eigenschaften von ehemals zu neuer Geltung: „das geniale Rennpferd“. „Eine Karriere sucht ihren Absolventen“ (Stellenausschreibung 1998). Der aussenstehende Betrachter, der Nichtbeteiligte ist der Mann ohne Eigenschaften."
+    ]
+   ]
+  },
+  {
+   "art": "titel",
+   "stufe": 2,
+   "text": "Der Fall Moosbrugger",
+   "anker": "der-fall-moosbrugger"
+  },
+  {
+   "art": "liste",
+   "punkte": [
+    [
+     "Verminderte Zurechnungsfähigkeit: Das Projekt der Psychiatrisierung des Strafrechts strandet an der Unvereinbarkeit medizinischer und juristischer Begrifflichkeit."
+    ],
+    [
+     "Die persönliche Wahrheit: \"Man hat eine zweite Heimat, in der alles was man tut, unschuldig ist\"."
+    ]
+   ]
+  }
+ ]
+}

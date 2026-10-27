@@ -1,0 +1,54 @@
+{
+  "titel": "Weiterführende Links",
+  "einleitung": "Anlaufstellen, Verbände und Behörden, die Michael Bessler auf seiner Website empfiehlt. Die Links führen zu Angeboten Dritter und öffnen sich in einem neuen Fenster.",
+  "gruppen": [
+    {
+      "_key": "rechtsauskunft",
+      "titel": "Rechtsauskunft und Anlaufstellen",
+      "links": [
+        { "_key": "anwaltskollektiv", "titel": "Rechtsauskunft Anwaltskollektiv", "url": "https://www.anwaltskollektiv.ch/", "erreichbar": true },
+        { "_key": "sans-papiers", "titel": "Sans-Papiers Anlaufstelle", "url": "https://sans-papiers.ch/", "erreichbar": true, "hinweis": "Die bisher verlinkte Unterseite (index.php?id=184) existiert nicht mehr; der Link führt zur Startseite." },
+        { "_key": "psychex", "titel": "Psychex", "url": "https://www.psychex.ch/", "erreichbar": false, "hinweis": "Die Website war am 27. Oktober 2026 nicht erreichbar (keine Antwort des Servers)." }
+      ]
+    },
+    {
+      "_key": "mietrecht",
+      "titel": "Mietrecht",
+      "links": [
+        { "_key": "mietrecht-ch", "titel": "mietrecht.ch", "url": "https://www.mietrecht.ch/", "erreichbar": true },
+        { "_key": "mieterverband", "titel": "Mieterverband", "url": "https://www.mieterverband.ch/", "erreichbar": true },
+        { "_key": "gerichte-zh-mietdepot", "titel": "Gerichte des Kantons Zürich: Mietdepot (Rechte und Pflichten)", "url": "https://www.gerichte-zh.ch/de/themen/miete/rechte-und-pflichten/mietdepot", "erreichbar": true, "hinweis": "Adresse aktualisiert (die bisherige Adresse leitet dorthin weiter)." }
+      ]
+    },
+    {
+      "_key": "ehe-familie",
+      "titel": "Ehe und Familie",
+      "links": [
+        { "_key": "gerichte-zh-ehe", "titel": "Gerichte des Kantons Zürich: Ehe und Familie", "url": "https://www.gerichte-zh.ch/de/themen/ehe-und-familie", "erreichbar": true, "hinweis": "Die bisher verlinkte Seite zur Gesetzesänderung per 1. Januar 2017 existiert nicht mehr; der Link führt zur Themenseite." },
+        { "_key": "heiraten-zuerich", "titel": "Heiraten Stadt Zürich", "url": "https://www.stadt-zuerich.ch/prd/de/index/bevoelkerungsamt/heiraten.html", "erreichbar": false, "hinweis": "Die bisherige Adresse liefert 404; eine Nachfolgeseite war am 27. Oktober 2026 nicht eindeutig auffindbar." }
+      ]
+    },
+    {
+      "_key": "strafrecht",
+      "titel": "Strafrecht",
+      "links": [
+        { "_key": "stawa-strafmass", "titel": "Staatsanwaltschaft Kanton Zürich: Strafmassempfehlungen", "url": "https://www.zh.ch/de/sicherheit-justiz/strafverfahren/informationszugang-interessenbindungen.html#-1576891645", "erreichbar": true }
+      ]
+    },
+    {
+      "_key": "coaching",
+      "titel": "Coaching",
+      "links": [
+        { "_key": "michaelbessler-ch", "titel": "Michael Bessler Coaching (michaelbessler.ch)", "url": "https://www.michaelbessler.ch/", "beschreibung": "Eigene Website von Michael Bessler zum Coaching.", "erreichbar": true }
+      ]
+    }
+  ],
+  "belege": {
+    "herkunft": [
+      { "quelle": "Linkseite der bisherigen Website (zehn Einträge); Erreichbarkeit aller Ziele am 27. Oktober 2026 geprüft", "url": "https://www.rechtsanwaltbessler.ch/links.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+    ],
+    "freigabe": "demo"
+  },
+  "seoTitel": "Weiterführende Links",
+  "seoBeschreibung": "Anlaufstellen, Verbände und Behörden zu Rechtsauskunft, Mietrecht, Ehe und Familie, Strafrecht und Coaching, empfohlen von Rechtsanwalt Michael Bessler, Zürich."
+}

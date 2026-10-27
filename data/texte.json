@@ -1,0 +1,168 @@
+{
+  "demoHinweis": "Entwurf: Dies ist eine Verkaufs-Demo und nicht die offizielle Website von Rechtsanwalt Michael Bessler.",
+  "navigation": [
+    {
+      "text": "Person",
+      "ziel": "/person/"
+    },
+    {
+      "text": "Rechtsgebiete",
+      "ziel": "/rechtsgebiete/"
+    },
+    {
+      "text": "Coaching",
+      "ziel": "/coaching/"
+    },
+    {
+      "text": "Publikationen",
+      "ziel": "/publikationen/"
+    },
+    {
+      "text": "Kontakt",
+      "ziel": "/kontakt/"
+    }
+  ],
+  "kopf": {
+    "startLabel": "Michael Bessler, Rechtsanwalt: zur Startseite",
+    "menueKnopf": "Menü",
+    "menueTitel": "Menü",
+    "schliessen": "Schliessen",
+    "telefonLabel": "Anrufen"
+  },
+  "footer": {
+    "leitsatz": "Rechtsanwalt, Strafverteidiger und Coach an der Neugasse 6 in Zürich.",
+    "kontaktTitel": "Kanzlei",
+    "seitenTitel": "Seiten",
+    "rechtlichesTitel": "Rechtliches",
+    "weitere": [
+      {
+        "text": "Weiterführende Links",
+        "ziel": "/links/"
+      }
+    ],
+    "rechtliches": [
+      {
+        "text": "Impressum",
+        "ziel": "/impressum/"
+      },
+      {
+        "text": "Datenschutzerklärung",
+        "ziel": "/datenschutz/"
+      }
+    ],
+    "route": "Lage in Google Maps",
+    "bildnachweis": {
+      "text": "Bildnachweis",
+      "ziel": "/impressum/#bildnachweis"
+    },
+    "copyright": "Michael Bessler, Rechtsanwalt, Zürich",
+    "demoHinweis": "Entwurf einer neuen Website für Rechtsanwalt Michael Bessler. Betreiber dieser Demo ist Nick Holzbecher (siehe Impressum). Es ist nicht die offizielle Website der Kanzlei."
+  },
+  "ui": {
+    "zumInhalt": "Zum Inhalt springen",
+    "telefon": "Telefon",
+    "email": "E-Mail",
+    "adresse": "Adresse",
+    "karte": "Lage in Google Maps",
+    "neuesFenster": "öffnet in einem neuen Fenster",
+    "stand": "Stand",
+    "quelle": "Quelle",
+    "bildnachweisTitel": "Bildnachweis",
+    "weiterlesen": "Weiterlesen",
+    "nichtGefundenTitel": "Diese Seite gibt es nicht",
+    "nichtGefundenText": "Die Adresse ist falsch geschrieben oder die Seite wurde verschoben. Person, Rechtsgebiete, Coaching, Publikationen und Kontakt finden Sie über das Menü.",
+    "nichtGefundenLink": {
+      "text": "Zur Startseite",
+      "ziel": "/"
+    }
+  },
+  "publikation": {
+    "inhaltsverzeichnis": "Inhalt",
+    "zurueck": "Alle Publikationen",
+    "autor": "Autor",
+    "erschienen": "Erschienen",
+    "ohneDatum": "ohne Datumsangabe",
+    "arten": {
+      "rezension": "Rezension",
+      "thesen": "Thesen",
+      "seminararbeit": "Seminararbeit"
+    },
+    "drucken": "Drucken",
+    "nachOben": "Nach oben",
+    "hinweisHistorisch": "Dieser Text ist ein wissenschaftlicher beziehungsweise literarischer Beitrag und keine aktuelle Rechtsauskunft.",
+    "originalLabel": "Wortlaut der bisherigen Website",
+    "wortlaut": "Der Text steht hier im Wortlaut der bisherigen Website von Michael Bessler."
+  },
+  "formular": {
+    "titel": "Nachricht an die Kanzlei",
+    "einleitung": "Dieses Formular bereitet eine E-Mail vor und öffnet sie in Ihrem E-Mail-Programm. Die Website sendet und speichert nichts.",
+    "name": "Name",
+    "email": "Ihre E-Mail-Adresse",
+    "telefon": "Telefon (freiwillig)",
+    "telefonHilfe": "Für einen Rückruf, wenn Sie das möchten.",
+    "betreff": "Betreff",
+    "betreffOptionen": [
+      {
+        "wert": "strafrecht",
+        "titel": "Strafrecht"
+      },
+      {
+        "wert": "mietrecht",
+        "titel": "Mietrecht"
+      },
+      {
+        "wert": "migrationsrecht",
+        "titel": "Migrationsrecht"
+      },
+      {
+        "wert": "coaching",
+        "titel": "Coaching"
+      },
+      {
+        "wert": "allgemein",
+        "titel": "Allgemeine Anfrage"
+      }
+    ],
+    "nachricht": "Nachricht",
+    "nachrichtHilfe": "Kurz, worum es geht. Bitte keine vertraulichen Falldetails und keine Dokumente, bevor Sie Rückmeldung aus der Kanzlei haben.",
+    "pflicht": "Pflichtfelder sind mit * gekennzeichnet.",
+    "datenschutzHinweis": "Hinweise zum Umgang mit Ihren Angaben stehen in der",
+    "datenschutzLink": {
+      "text": "Datenschutzerklärung",
+      "ziel": "/datenschutz/"
+    },
+    "absenden": "E-Mail vorbereiten",
+    "hinweisNachher": "Ihr E-Mail-Programm sollte sich jetzt mit der vorbereiteten Nachricht öffnen. Bitte prüfen und dort senden. Öffnet sich nichts, kopieren Sie die Nachricht und senden sie an",
+    "kopieren": "Nachricht kopieren",
+    "kopiert": "Die Nachricht liegt in der Zwischenablage.",
+    "kopierenFehler": "Das Kopieren hat nicht geklappt. Die ganze Nachricht steht unten zum Markieren und Kopieren.",
+    "zuLangFehler": "Die Nachricht ist für den E-Mail-Link zu lang und die Zwischenablage ist gesperrt. Bitte den Text unten kopieren und selbst in eine E-Mail einfügen.",
+    "volltextLabel": "Ihre Nachricht zum Kopieren",
+    "betreffPraefix": "Anfrage über die Website",
+    "fehlerName": "Bitte Ihren Namen eingeben.",
+    "fehlerEmail": "Bitte eine gültige E-Mail-Adresse eingeben, zum Beispiel name@beispiel.ch.",
+    "fehlerNachricht": "Bitte eine Nachricht schreiben.",
+    "ohneJavascript": "Ohne JavaScript bleibt das Formular ohne Funktion. Schreiben Sie direkt an",
+    "keinMandat": "Eine Nachricht über diese Website begründet noch kein Mandat. Ob und wie die Kanzlei ein Anliegen übernimmt, wird erst nach Rücksprache vereinbart."
+  },
+  "einwilligung": {
+    "fussLink": "Datenschutz-Einstellungen",
+    "ruhendTitel": "Nichts einzustellen",
+    "ruhendText": "Diese Website setzt keine Cookies, speichert nichts in Ihrem Browser und bindet keine Dienste Dritter ein. Karte und weiterführende Websites öffnen sich erst, wenn Sie einen Link anklicken.",
+    "bannerTitel": "Datenschutz-Einstellungen",
+    "bannerText": "Einige Funktionen dieser Website laden Inhalte von Drittanbietern. Sie entscheiden, welche davon erlaubt sind. Details stehen in der",
+    "alleAkzeptieren": "Alle akzeptieren",
+    "nurNotwendige": "Nur notwendige",
+    "einstellungen": "Einstellungen",
+    "auswahlSpeichern": "Auswahl speichern",
+    "widerrufen": "Einwilligung widerrufen",
+    "notwendigTitel": "Notwendig",
+    "notwendigText": "Speichert nur Ihre Entscheidung zu diesen Einstellungen.",
+    "datenschutzerklaerung": "Datenschutzerklärung",
+    "kategorien": []
+  },
+  "seo": {
+    "titelZusatz": "Rechtsanwalt Bessler, Zürich",
+    "beschreibung": "Michael Bessler, lic. iur., Rechtsanwalt in Zürich: Strafrecht, Mietrecht und Migrationsrecht, Strafverteidigung und Coaching. Kanzlei an der Neugasse 6 beim Hauptbahnhof."
+  }
+}

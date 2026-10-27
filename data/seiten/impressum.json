@@ -1,0 +1,32 @@
+{
+  "slug": "impressum",
+  "titel": "Impressum",
+  "einleitung": "Diese Website ist eine Verkaufs-Demo. Sie zeigt, wie ein neuer Webauftritt von Rechtsanwalt Michael Bessler aussehen könnte, und ist nicht die offizielle Website der Kanzlei.",
+  "stand": "27. Oktober 2026",
+  "bloecke": [
+    { "titel": "Betreiber dieser Demo" },
+    "**Nick Holzbecher**, Entwicklung von Websites für kleine Unternehmen. Die Postanschrift wird auf Anfrage mitgeteilt.",
+    "E-Mail: [holzbechernick@gmail.com](mailto:holzbechernick@gmail.com)",
+    "Verantwortlich für Gestaltung, Technik und die Zusammenstellung der Inhalte dieser Demo. Die Demo wurde ohne Auftrag von Michael Bessler erstellt und wird ihm als Vorschlag vorgelegt.",
+    { "titel": "Dargestellte Kanzlei" },
+    "**Michael Bessler, lic. iur., Rechtsanwalt**, Neugasse 6, 8005 Zürich. Telefon [043 960 36 28](tel:+41439603628), E-Mail [mail@rechtsanwaltbessler.ch](mailto:mail@rechtsanwaltbessler.ch).",
+    "Diese Angaben stammen von der bisherigen Website der Kanzlei (rechtsanwaltbessler.ch). Rechtsform, Unternehmens-Identifikationsnummer, Registereinträge, Aufsichtsbehörde und Berufsverbandsmitgliedschaften werden hier nicht genannt, weil sie nicht belegt sind. Für den Produktivbetrieb prüft und ergänzt sie der Anwalt.",
+    { "titel": "Inhalte" },
+    "Texte, Lebenslauf, Angaben zu den Rechtsgebieten, zum Coaching und zu den Links wurden am 27. Oktober 2026 von der bisherigen Website übernommen und sprachlich leicht überarbeitet, ohne Fakten zu ändern. Massgebend sind die Angaben der Kanzlei.",
+    "Die Publikationen (eine Rezension, Thesen und eine Seminararbeit) sind Werke von Michael Bessler und stehen hier im Wortlaut der bisherigen Website. Sie sind wissenschaftliche beziehungsweise literarische Beiträge und keine Rechtsauskunft.",
+    { "titel": "Urheberrechte und Bilder" },
+    "Die Texte dieser Website und die Publikationen unterliegen dem Urheberrecht von Michael Bessler. Zwei Gemälde stammen von Candida Sauter; bei einem weiteren Gemälde nennt die bisherige Website keine Urheberin und keinen Urheber. Alle Bilder werden in dieser Demo vorbehaltlich der Freigabe durch die Berechtigten gezeigt. Die Bildquellen stehen im Bildnachweis am Ende dieser Seite. Es werden keine Kartenausschnitte und keine Fotos Dritter verwendet.",
+    { "titel": "Haftung" },
+    "Die Inhalte wurden mit Sorgfalt zusammengestellt. Für Richtigkeit, Vollständigkeit und Aktualität wird keine Gewähr übernommen. Die Website ersetzt keine Rechtsberatung im Einzelfall. Links zu externen Websites führen zu Angeboten Dritter, für deren Inhalte die jeweiligen Betreiber verantwortlich sind.",
+    { "titel": "Technik" },
+    "Die Demo ist eine statische Website und wird über GitHub Pages ausgeliefert (GitHub, Inc., San Francisco, USA). Sie ist für Suchmaschinen gesperrt (noindex) und als Entwurf gekennzeichnet."
+  ],
+  "seoTitel": "Impressum",
+  "seoBeschreibung": "Impressum der Verkaufs-Demo für Rechtsanwalt Michael Bessler: Betreiber der Demo, dargestellte Kanzlei, Quellen der Inhalte, Urheberrechte und Bildnachweis.",
+  "belege": {
+    "herkunft": [
+      { "quelle": "Angaben des Demo-Betreibers (Nick Holzbecher) und Kontaktdaten der Kanzlei von deren bisheriger Website", "url": "https://www.rechtsanwaltbessler.ch/konktakt.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+    ],
+    "freigabe": "demo"
+  }
+}

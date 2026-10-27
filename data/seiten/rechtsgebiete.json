@@ -1,0 +1,22 @@
+{
+  "titel": "Rechtsgebiete",
+  "einleitung": "Michael Bessler führt eine Kanzlei für Strafrecht, Mietrecht und Migrationsrecht an der Neugasse 6 in Zürich. In allen drei Gebieten bietet er Rechtsauskunft, Rechtsberatung und Rechtsvertretung an, im Strafrecht zudem Strafverteidigung.",
+  "leistungsformenTitel": "Leistungen",
+  "leistungsformen": ["Rechtsauskunft", "Rechtsberatung", "Rechtsvertretung", "Strafverteidigung"],
+  "kontaktTitel": "Ihr Anliegen",
+  "kontaktText": "Ob ein Strafverfahren, ein Streit um die Wohnung oder eine aufenthaltsrechtliche Frage: Nehmen Sie Kontakt auf, um Ihr Anliegen zu besprechen.",
+  "kontaktLink": { "text": "Kontakt aufnehmen", "ziel": "/kontakt/" },
+  "bild": "gemaelde-abstrakt",
+  "linksTitel": "Anlaufstellen und weiterführende Links",
+  "linksText": "Rechtsauskunft Anwaltskollektiv, Mieterverband, Gerichte des Kantons Zürich, Staatsanwaltschaft und weitere Stellen, die Michael Bessler auf seiner Website empfiehlt.",
+  "linksLink": { "text": "Zu den Links", "ziel": "/links/" },
+  "belege": {
+    "herkunft": [
+      { "quelle": "Seite «Rechtsgebiete» der bisherigen Website (drei Gebiete, vier Leistungsformen, Gemälde)", "url": "https://www.rechtsanwaltbessler.ch/rechtsgebiete.html", "abgerufen": "2026-10-27", "art": "eigene-website" },
+      { "quelle": "Seite «Persönlich» der bisherigen Website (Kanzlei für Strafrecht, Migrationsrecht und Mietrecht)", "url": "https://www.rechtsanwaltbessler.ch/personlich.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+    ],
+    "freigabe": "demo"
+  },
+  "seoTitel": "Rechtsgebiete: Strafrecht, Mietrecht, Migrationsrecht",
+  "seoBeschreibung": "Rechtsauskunft, Rechtsberatung, Rechtsvertretung und Strafverteidigung: Rechtsanwalt Michael Bessler in Zürich für Strafrecht, Mietrecht und Migrationsrecht."
+}

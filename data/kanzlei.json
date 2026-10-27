@@ -1,0 +1,20 @@
+{
+  "name": "Rechtsanwalt Michael Bessler",
+  "person": "Michael Bessler",
+  "titel": "lic. iur.",
+  "beruf": "Rechtsanwalt",
+  "taetigkeiten": ["Rechtsanwalt", "Strafverteidiger", "Coach"],
+  "adresse": { "strasse": "Neugasse 6", "plz": "8005", "ort": "Zürich", "land": "Schweiz", "zusatz": "4. OG" },
+  "telefon": "+41 43 960 36 28",
+  "email": "mail@rechtsanwaltbessler.ch",
+  "website": "https://www.rechtsanwaltbessler.ch",
+  "karteUrl": "https://www.google.com/maps/search/?api=1&query=Neugasse+6%2C+8005+Z%C3%BCrich",
+  "coachingUrl": "https://www.michaelbessler.ch",
+  "portrait": "portrait",
+  "seoBild": "og-bessler",
+  "herkunft": [
+    { "quelle": "Kontaktseite der bisherigen Website (Adresse, Telefon, E-Mail, 4. OG)", "url": "https://www.rechtsanwaltbessler.ch/konktakt.html", "abgerufen": "2026-10-27", "art": "eigene-website" },
+    { "quelle": "Startseite der bisherigen Website (lic. iur., Rechtsanwalt, Strafverteidiger und Coach)", "url": "https://www.rechtsanwaltbessler.ch/home.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+  ],
+  "freigabe": "demo"
+}

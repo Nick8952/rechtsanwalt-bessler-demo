@@ -1,0 +1,25 @@
+{
+  "titel": "Kontakt",
+  "einleitung": "Telefonisch oder per E-Mail erreichen Sie die Kanzlei direkt. Das Formular bereitet eine E-Mail in Ihrem eigenen E-Mail-Programm vor.",
+  "direktTitel": "Direkt erreichen",
+  "lageTitel": "Lage",
+  "lage": [
+    "Das Büro befindet sich sehr zentral, rund fünf Gehminuten vom Hauptbahnhof Zürich, an der Neugasse 6 in 8005 Zürich, im 4. Obergeschoss.",
+    "Das Bürogebäude steht an der Ecke Klingenstrasse/Neugasse."
+  ],
+  "oevTitel": "Mit dem Tram",
+  "oev": [
+    "Tram 4, 13 oder 17 bis zur Haltestelle «Museum für Gestaltung». Von dort links die Klingenstrasse entlang bis an deren Ende, wo rechts die Neugasse beginnt."
+  ],
+  "hinweisTitel": "Hinweis zur Kontaktaufnahme",
+  "hinweis": "Eine Anfrage per Telefon, E-Mail oder über das Formular ist noch keine Mandatserteilung und begründet kein Mandatsverhältnis. Bitte senden Sie keine vertraulichen Unterlagen, bevor Sie Rückmeldung aus der Kanzlei erhalten haben.",
+  "belege": {
+    "herkunft": [
+      { "quelle": "Kontaktseite der bisherigen Website (Lage, Wegbeschreibung, Tramlinien 4, 17 und 13)", "url": "https://www.rechtsanwaltbessler.ch/konktakt.html", "abgerufen": "2026-10-27", "art": "eigene-website" },
+      { "quelle": "Museum für Gestaltung Zürich, Anreise: Tram 4, 13, 17 bis Haltestelle Museum für Gestaltung (Bestätigung der Tramlinien)", "url": "https://museum-gestaltung.ch/en/besuch/", "abgerufen": "2026-10-27", "art": "drittquelle" }
+    ],
+    "freigabe": "demo"
+  },
+  "seoTitel": "Kontakt und Anfahrt",
+  "seoBeschreibung": "Rechtsanwalt Michael Bessler, Neugasse 6, 8005 Zürich, 4. OG. Telefon 043 960 36 28, E-Mail mail@rechtsanwaltbessler.ch. Fünf Gehminuten vom Hauptbahnhof, Tram 4, 13, 17."
+}

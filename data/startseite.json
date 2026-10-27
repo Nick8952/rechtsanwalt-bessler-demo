@@ -1,0 +1,108 @@
+{
+  "hero": {
+    "ueberzeile": "lic. iur. Michael Bessler, Rechtsanwalt in Zürich",
+    "titel": "Strafverteidigung, Mietrecht und Migrationsrecht in Zürich.",
+    "text": "Rechtsauskunft, Rechtsberatung und Rechtsvertretung. Jemand, der Ihnen zuhört und sich für Sie einsetzt.",
+    "knopf": {
+      "text": "Kontakt aufnehmen",
+      "ziel": "/kontakt/"
+    },
+    "zweiterKnopf": {
+      "text": "Rechtsgebiete ansehen",
+      "ziel": "/rechtsgebiete/"
+    }
+  },
+  "einleitung": {
+    "randnotiz": "Rechtsanwalt, Strafverteidiger und Coach",
+    "fragen": [
+      "Suchen Sie einen kompetenten Anwalt?",
+      "Suchen Sie einen erfahrenen Strafverteidiger?",
+      "Brauchen Sie jemanden, der sich für Sie einsetzt?",
+      "Brauchen Sie jemanden, der Ihnen zuhört, der Sie unterstützt, eine beratende Stimme?"
+    ],
+    "antwort": "Michael Bessler, lic. iur., ist Rechtsanwalt, Strafverteidiger und Coach. Seine Kanzlei an der Neugasse 6 in Zürich ist auf Strafrecht, Mietrecht und Migrationsrecht ausgerichtet."
+  },
+  "rechtsgebiete": {
+    "randnotizTitel": "Leistungen",
+    "titel": "Rechtsgebiete",
+    "text": "Rechtsauskunft, Rechtsberatung und Rechtsvertretung in drei Gebieten, im Strafrecht zudem Strafverteidigung.",
+    "link": {
+      "text": "Mehr zu den Rechtsgebieten",
+      "ziel": "/rechtsgebiete/"
+    }
+  },
+  "person": {
+    "titel": "Zur Person",
+    "text": "Michael Bessler, lic. iur., ist Rechtsanwalt und langjähriger Strafverteidiger. Er ist Pikettanwalt und Vertrauensanwalt des MVZ (Mieter- und Mieterinnenverband Zürich) und arbeitet daneben als Coach (zert. IKP).",
+    "zweiterText": "Zu seinen früheren juristischen Tätigkeiten gehören das Mietgericht Zürich, der Vorsitz der Schlichtungsbehörde Zürich und eine Assistenz an der Universität Zürich. Davor arbeitete er als Lehrer für Schauspiel und Szenenstudium, als Theaterschaffender, Buchhändler, Senn und Hilfsmatrose.",
+    "link": {
+      "text": "Lebenslauf und Mitgliedschaften",
+      "ziel": "/person/"
+    },
+    "bild": "gemaelde-figuren"
+  },
+  "coaching": {
+    "titel": "Coaching",
+    "untertitel": "persönlich, ganzheitlich, bedürfnis- und lösungsorientiert",
+    "text": "Coaching betreffend die eigene Lebenssituation, Partnerschaft, Familie und Beruf sowie betreffend juristische Konflikte. Ausgangs- und Mittelpunkt sind die Bedürfnisse und Ziele der Klientinnen und Klienten.",
+    "link": {
+      "text": "Zum Coaching",
+      "ziel": "/coaching/"
+    }
+  },
+  "publikationen": {
+    "randnotiz": "Rezension, Thesen und eine Seminararbeit",
+    "titel": "Publikationen",
+    "text": "Texte von Michael Bessler zur Rechtsgeschichte und zu Robert Musils Roman «Der Mann ohne Eigenschaften», im Wortlaut der bisherigen Website.",
+    "link": {
+      "text": "Alle Publikationen",
+      "ziel": "/publikationen/"
+    }
+  },
+  "kontakt": {
+    "titel": "Kontakt",
+    "text": "Die Kanzlei liegt rund fünf Gehminuten vom Hauptbahnhof Zürich entfernt, an der Ecke Klingenstrasse/Neugasse, im 4. Obergeschoss.",
+    "anfahrt": "Tram 4, 13 oder 17 bis Haltestelle «Museum für Gestaltung».",
+    "link": {
+      "text": "Kontakt aufnehmen",
+      "ziel": "/kontakt/"
+    }
+  },
+  "belege": {
+    "herkunft": [
+      {
+        "quelle": "Einleitungs- und Startseite der bisherigen Website (vier Fragen, «lic. iur. Michael Bessler, Rechtsanwalt, Strafverteidiger und Coach»)",
+        "url": "https://www.rechtsanwaltbessler.ch/index.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      },
+      {
+        "quelle": "Seite «Persönlich» der bisherigen Website (Tätigkeiten, Lebenslauf)",
+        "url": "https://www.rechtsanwaltbessler.ch/personlich.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      },
+      {
+        "quelle": "Seite «Rechtsgebiete» der bisherigen Website (Strafrecht, Mietrecht, Migrationsrecht; Rechtsauskunft, Rechtsberatung, Rechtsvertretung, Strafverteidigung)",
+        "url": "https://www.rechtsanwaltbessler.ch/rechtsgebiete.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      },
+      {
+        "quelle": "Seite «Coaching» der bisherigen Website",
+        "url": "https://www.rechtsanwaltbessler.ch/coaching.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      },
+      {
+        "quelle": "Kontaktseite der bisherigen Website (Lage, Tramlinien); Tramlinien 4, 13, 17 zur Haltestelle Museum für Gestaltung geprüft auf der Website des Museums",
+        "url": "https://www.rechtsanwaltbessler.ch/konktakt.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      }
+    ],
+    "freigabe": "demo"
+  },
+  "seoTitel": "Strafrecht, Mietrecht und Migrationsrecht in Zürich",
+  "seoBeschreibung": "Michael Bessler, lic. iur., Rechtsanwalt, Strafverteidiger und Coach in Zürich. Rechtsauskunft, Beratung und Vertretung in Strafrecht, Mietrecht und Migrationsrecht."
+}

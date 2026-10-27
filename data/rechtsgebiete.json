@@ -1,0 +1,41 @@
+[
+  {
+    "slug": "strafrecht",
+    "titel": "Strafrecht",
+    "kurz": "Strafverteidigung sowie Rechtsauskunft, Rechtsberatung und Rechtsvertretung im Strafrecht.",
+    "bezuege": ["Langjähriger Strafverteidiger", "Mitglied im Verein Pikett Strafverteidigung"],
+    "reihenfolge": 10,
+    "herkunft": [
+      { "quelle": "Seite «Rechtsgebiete» der bisherigen Website", "url": "https://www.rechtsanwaltbessler.ch/rechtsgebiete.html", "abgerufen": "2026-10-27", "art": "eigene-website" },
+      { "quelle": "Seite «Persönlich» der bisherigen Website (Strafverteidiger, Verein Pikett Strafverteidigung)", "url": "https://www.rechtsanwaltbessler.ch/personlich.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+    ],
+    "freigabe": "demo"
+  },
+  {
+    "slug": "mietrecht",
+    "titel": "Mietrecht",
+    "kurz": "Rechtsauskunft, Rechtsberatung und Rechtsvertretung im Mietrecht.",
+    "bezuege": [
+      "Pikettanwalt und Vertrauensanwalt des MVZ (Mieter- und Mieterinnenverband Zürich)",
+      "Früher Mietrichter am Mietgericht Zürich und Vorsitzender der Schlichtungsbehörde Zürich",
+      "Früher öffentliche Rechtsberatung beim MVZ"
+    ],
+    "reihenfolge": 20,
+    "herkunft": [
+      { "quelle": "Seite «Rechtsgebiete» der bisherigen Website", "url": "https://www.rechtsanwaltbessler.ch/rechtsgebiete.html", "abgerufen": "2026-10-27", "art": "eigene-website" },
+      { "quelle": "Seite «Persönlich» der bisherigen Website (MVZ, Mietgericht, Schlichtungsbehörde)", "url": "https://www.rechtsanwaltbessler.ch/personlich.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+    ],
+    "freigabe": "demo"
+  },
+  {
+    "slug": "migrationsrecht",
+    "titel": "Migrationsrecht",
+    "kurz": "Rechtsauskunft, Rechtsberatung und Rechtsvertretung im Migrationsrecht.",
+    "bezuege": [],
+    "reihenfolge": 30,
+    "herkunft": [
+      { "quelle": "Seite «Rechtsgebiete» der bisherigen Website", "url": "https://www.rechtsanwaltbessler.ch/rechtsgebiete.html", "abgerufen": "2026-10-27", "art": "eigene-website" }
+    ],
+    "freigabe": "demo"
+  }
+]

@@ -1,0 +1,210 @@
+{
+  "portrait": {
+    "id": "portrait",
+    "art": "foto",
+    "original": "assets/originale/p002_1_00.jpg",
+    "breite": 652,
+    "hoehe": 316,
+    "alt": "Michael Bessler in seiner Kanzlei, vor Regalen mit bunten Buchrücken, mit dunklem Jackett und runder Brille",
+    "legende": "Michael Bessler in seiner Kanzlei an der Neugasse 6 in 8005 Zürich",
+    "nachweis": {
+      "urheber": "Fotografin oder Fotograf auf der bisherigen Website nicht genannt",
+      "titel": "Portrait von Michael Bessler in der Kanzlei",
+      "quelle": "https://www.rechtsanwaltbessler.ch/images/p002_1_00.jpg (Seite «Persönlich» der bisherigen Website)",
+      "lizenz": "Nutzung in der Demo vorbehaltlich Freigabe durch Michael Bessler"
+    },
+    "abgerufen": "2026-10-27",
+    "bearbeitung": "Nur verkleinert und neu komprimiert; Ausschnitt und Farben unverändert",
+    "quellen": {
+      "avif": [
+        {
+          "breite": 480,
+          "url": "/bilder/portrait-480-de3445e9.avif"
+        },
+        {
+          "breite": 652,
+          "url": "/bilder/portrait-652-6cef588c.avif"
+        }
+      ],
+      "webp": [
+        {
+          "breite": 480,
+          "url": "/bilder/portrait-480-78076c4c.webp"
+        },
+        {
+          "breite": 652,
+          "url": "/bilder/portrait-652-075b7fc4.webp"
+        }
+      ]
+    },
+    "bytes": {
+      "avif": [
+        7617,
+        11484
+      ],
+      "webp": [
+        10966,
+        15840
+      ]
+    }
+  },
+  "gemaelde-figuren": {
+    "id": "gemaelde-figuren",
+    "art": "foto",
+    "original": "assets/originale/p009_1_00.jpg",
+    "breite": 320,
+    "hoehe": 474,
+    "alt": "Gemälde von Candida Sauter: drei Figuren in Gelb, Rot und Braun vor blauem Grund",
+    "legende": "Gemälde von Candida Sauter",
+    "nachweis": {
+      "urheber": "Candida Sauter",
+      "titel": "Gemälde (Figuren), Bildlegende der bisherigen Startseite: «Gemälde von Candida Sauter»",
+      "quelle": "https://www.rechtsanwaltbessler.ch/images/p009_1_00.jpg (Startseite der bisherigen Website)",
+      "lizenz": "Rechte bei der Künstlerin; Nutzung in der Demo vorbehaltlich Freigabe"
+    },
+    "abgerufen": "2026-10-27",
+    "bearbeitung": "Unverändert, nur neu komprimiert",
+    "quellen": {
+      "avif": [
+        {
+          "breite": 320,
+          "url": "/bilder/gemaelde-figuren-320-88d6874a.avif"
+        }
+      ],
+      "webp": [
+        {
+          "breite": 320,
+          "url": "/bilder/gemaelde-figuren-320-9228eed0.webp"
+        }
+      ]
+    },
+    "bytes": {
+      "avif": [
+        14142
+      ],
+      "webp": [
+        22506
+      ]
+    }
+  },
+  "gemaelde-portrait": {
+    "id": "gemaelde-portrait",
+    "art": "foto",
+    "original": "assets/originale/p008_1_00.jpg",
+    "breite": 320,
+    "hoehe": 603,
+    "alt": "Gemälde von Candida Sauter: Bildnis einer Person mit rotem Hut und dunklem Kleid vor gelbem Grund",
+    "legende": "Gemälde von Candida Sauter",
+    "nachweis": {
+      "urheber": "Candida Sauter",
+      "titel": "Gemälde (Bildnis), Bildlegende der bisherigen Coaching-Seite: «Gemälde von Candida Sauter»",
+      "quelle": "https://www.rechtsanwaltbessler.ch/images/p008_1_00.jpg (Seite «Coaching» der bisherigen Website)",
+      "lizenz": "Rechte bei der Künstlerin; Nutzung in der Demo vorbehaltlich Freigabe"
+    },
+    "abgerufen": "2026-10-27",
+    "bearbeitung": "Unverändert, nur neu komprimiert",
+    "quellen": {
+      "avif": [
+        {
+          "breite": 320,
+          "url": "/bilder/gemaelde-portrait-320-df55773f.avif"
+        }
+      ],
+      "webp": [
+        {
+          "breite": 320,
+          "url": "/bilder/gemaelde-portrait-320-58c1641d.webp"
+        }
+      ]
+    },
+    "bytes": {
+      "avif": [
+        16142
+      ],
+      "webp": [
+        18984
+      ]
+    }
+  },
+  "gemaelde-abstrakt": {
+    "id": "gemaelde-abstrakt",
+    "art": "foto",
+    "original": "assets/originale/p001_1_00.jpg",
+    "breite": 652,
+    "hoehe": 564,
+    "alt": "Abstraktes Gemälde in Rot, Gelb, Violett und Grün mit waagrechten Farbspuren",
+    "legende": "Gemälde",
+    "nachweis": {
+      "urheber": "Auf der bisherigen Website nicht genannt (zu klären)",
+      "titel": "Gemälde (abstrakt) auf der Seite «Rechtsgebiete» der bisherigen Website",
+      "quelle": "https://www.rechtsanwaltbessler.ch/images/p001_1_00.jpg (Seite «Rechtsgebiete» der bisherigen Website)",
+      "lizenz": "Urheberschaft und Nutzungsrecht zu klären; Nutzung in der Demo vorbehaltlich Freigabe"
+    },
+    "abgerufen": "2026-10-27",
+    "bearbeitung": "Nur verkleinert und neu komprimiert",
+    "quellen": {
+      "avif": [
+        {
+          "breite": 480,
+          "url": "/bilder/gemaelde-abstrakt-480-c8de9988.avif"
+        },
+        {
+          "breite": 652,
+          "url": "/bilder/gemaelde-abstrakt-652-7866cb25.avif"
+        }
+      ],
+      "webp": [
+        {
+          "breite": 480,
+          "url": "/bilder/gemaelde-abstrakt-480-83692a79.webp"
+        },
+        {
+          "breite": 652,
+          "url": "/bilder/gemaelde-abstrakt-652-ff63c039.webp"
+        }
+      ]
+    },
+    "bytes": {
+      "avif": [
+        14109,
+        22769
+      ],
+      "webp": [
+        15914,
+        24670
+      ]
+    }
+  },
+  "og-bessler": {
+    "id": "og-bessler",
+    "art": "foto",
+    "original": "erzeugt aus assets/originale/p002_1_00.jpg (Portrait, unverändert) auf dem Papiergrund der Website",
+    "breite": 1200,
+    "hoehe": 630,
+    "alt": "Michael Bessler in seiner Kanzlei in Zürich",
+    "legende": null,
+    "nachweis": {
+      "urheber": "Fotografin oder Fotograf auf der bisherigen Website nicht genannt",
+      "titel": "Vorschaubild für geteilte Links",
+      "quelle": "https://www.rechtsanwaltbessler.ch/images/p002_1_00.jpg; Montage von scripts/bilder-optimieren.mjs",
+      "lizenz": "Nutzung in der Demo vorbehaltlich Freigabe durch Michael Bessler"
+    },
+    "abgerufen": "2026-10-27",
+    "bearbeitung": "Montage: Portrait unverändert auf Papiergrund mit grüner Linie",
+    "quellen": {
+      "avif": [],
+      "webp": [
+        {
+          "breite": 1200,
+          "url": "/bilder/og-bessler-1200-97c7b93d.jpg"
+        }
+      ]
+    },
+    "bytes": {
+      "avif": [],
+      "webp": [
+        36118
+      ]
+    }
+  }
+}

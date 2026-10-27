@@ -1,0 +1,48 @@
+{
+  "titel": "Coaching",
+  "untertitel": "persönlich, ganzheitlich, bedürfnis- und lösungsorientiert",
+  "themenTitel": "Coaching betreffend",
+  "themen": [
+    "die eigene Lebenssituation, Partnerschaft, Familie, Beruf ...",
+    "juristische Konflikte"
+  ],
+  "absaetze": [
+    "Ausgangs- und Mittelpunkt des Coachings sind die Bedürfnisse und Ziele der Klienten. Was braucht der Klient, was will die Klientin?",
+    "Das lösungsorientierte Coaching hat zum Inhalt, diese Bedürfnisse zu klären und die Klienten zu unterstützen, ihre Ziele zu erreichen.",
+    "Mein Coaching basiert auf einem ganzheitlichen Menschenbild und berücksichtigt namentlich die psychischen, seelischen, verstandesmässigen, körperlichen und sozialen Aspekte des Individuums.",
+    "Das systemische Coaching berücksichtigt die Eingebundenheit des Einzelnen in soziale Systeme, wie zum Beispiel Partnerschaft, Familie, Berufswelt und Gesellschaft."
+  ],
+  "ausbildung": "Ausbildung in psychologischem Coaching am Institut für Körperzentrierte Psychologie (IKP) in Zürich; Coach (zert. IKP).",
+  "bild": "gemaelde-portrait",
+  "externTitel": "Eigene Website zum Coaching",
+  "externText": "Zum Coaching führt Michael Bessler eine eigene Website.",
+  "externLink": {
+    "text": "michaelbessler.ch",
+    "ziel": "https://www.michaelbessler.ch"
+  },
+  "belege": {
+    "herkunft": [
+      {
+        "quelle": "Seite «Coaching» der bisherigen Website (Wortlaut, sprachlich leicht bereinigt: «Das systemischen» zu «Das systemische», fehlender Schlusspunkt, «z.B.» ausgeschrieben)",
+        "url": "https://www.rechtsanwaltbessler.ch/coaching.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      },
+      {
+        "quelle": "Seite «Persönlich» der bisherigen Website (Ausbildung am IKP, Coach zert. IKP)",
+        "url": "https://www.rechtsanwaltbessler.ch/personlich.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      },
+      {
+        "quelle": "Linkseite der bisherigen Website (eigene Coaching-Website michaelbessler.ch)",
+        "url": "https://www.rechtsanwaltbessler.ch/links.html",
+        "abgerufen": "2026-10-27",
+        "art": "eigene-website"
+      }
+    ],
+    "freigabe": "demo"
+  },
+  "seoTitel": "Coaching: persönlich, ganzheitlich, lösungsorientiert",
+  "seoBeschreibung": "Coaching bei Michael Bessler in Zürich: persönlich, ganzheitlich, bedürfnis- und lösungsorientiert, zu Lebenssituation, Partnerschaft, Familie, Beruf und Konflikten."
+}

@@ -1,0 +1,20 @@
+{
+ "geistesgeschichtliche-grundlagen-des-deutschen-rechts": {
+  "sha256": "50bd2c2d791bd45f5ba2f4cf74771167552a9af034bb8a2ed7c057a650ab1a17",
+  "woerter": 4464,
+  "quelle": "https://www.rechtsanwaltbessler.ch/_die_geistgeschichtlichen_grundlagen_des_deutschen.html",
+  "abgerufen": "2026-10-27"
+ },
+ "der-mann-ohne-eigenschaften": {
+  "sha256": "558e46f158d23eb8c253dd6b5d7dd15531c88361467908b38dce5bd83e4008b4",
+  "woerter": 16003,
+  "quelle": "https://www.rechtsanwaltbessler.ch/_der_mann_ohne_eigenschaften-1.html",
+  "abgerufen": "2026-10-27"
+ },
+ "thesen-der-mann-ohne-eigenschaften": {
+  "sha256": "5da71d6df70ca23d8842dafa6c79cdb0bbd3d06c7b299afe9792701da8bf348f",
+  "woerter": 251,
+  "quelle": "https://www.rechtsanwaltbessler.ch/_der_mann_ohne_eigenschaften.html",
+  "abgerufen": "2026-10-27"
+ }
+}

@@ -1,0 +1,12 @@
+[
+  { "alt": "/home.html", "neu": "/", "bemerkung": "Bisherige Startseite nach der Einleitung" },
+  { "alt": "/personlich.html", "neu": "/person/" },
+  { "alt": "/rechtsgebiete.html", "neu": "/rechtsgebiete/" },
+  { "alt": "/coaching.html", "neu": "/coaching/" },
+  { "alt": "/konktakt.html", "neu": "/kontakt/", "bemerkung": "Bisherige Adresse mit Tippfehler" },
+  { "alt": "/kontakt.html", "neu": "/kontakt/", "bemerkung": "Vorsorglich, falls die korrekte Schreibweise verlinkt wurde" },
+  { "alt": "/links.html", "neu": "/links/" },
+  { "alt": "/_die_geistgeschichtlichen_grundlagen_des_deutschen.html", "neu": "/publikationen/geistesgeschichtliche-grundlagen-des-deutschen-rechts/" },
+  { "alt": "/_der_mann_ohne_eigenschaften-1.html", "neu": "/publikationen/der-mann-ohne-eigenschaften/" },
+  { "alt": "/_der_mann_ohne_eigenschaften.html", "neu": "/publikationen/thesen-der-mann-ohne-eigenschaften/" }
+]
