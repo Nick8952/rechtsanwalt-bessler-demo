@@ -175,3 +175,29 @@ anwaltliche Prüfung erstellt und vom Anwalt freizugeben (`docs/UEBERGABE.md`, F
   25.16 sporadisch mit «Navigating frame was detached» ab, lokal wie live, auch mit der passenden Chrome-for-Testing-Fassung 156.0.8078.47.
   Das ist kein Befund der Website. Audit und Funktionsprüfung wiederholen abgebrochene Navigationen seither bis zu dreimal in frischer
   Umgebung; die Ergebnisse in Abschnitt 12 stammen aus Läufen nach dieser Änderung.
+
+## 12. Stand nach der Codex-Abschlussprüfung (30. Oktober 2026, Commits ce336e5 und dcaa33d)
+
+**CI auf GitHub Actions (ubuntu, sauberer Runner, Lauf 41051245, grün):**
+
+| Schritt | Ergebnis |
+| --- | --- |
+| `npm run pruefen` | ✓ 484 Texte, 36 Links, 5 Bilder, 3 Publikationen (20'647 Wörter, neue kanonische Prüfsummen), 16 Belege; Sperrlisten-Selbsttest; Lint, Typen; Kontraste «Alle Paare erfüllen die Mindestwerte» |
+| `npm run seed -- --probe` | ✓ 17 Dokumente mit Parität (strikte Schemas, Feld `kennung`) |
+| `npm run build` + `export:pruefen` | ✓ 25 HTML-Dateien, 670 Verweise, noindex, keine Sitemap, kein JSON-LD; Bildvarianten 226 KB (jetzt inklusive OG-JPEG) |
+| `npm run qa` (Audit + Funktionen, Chrome des Runners) | ✓ **52/52** (13 Seiten × 4 Breiten), **93/93** (neu: Prüfung 92 «keine Übergänge unter reduzierter Bewegung»); keine Wiederholung nötig |
+| Studio | ✓ Typen, `sanity schema validate` 0 Fehler, 0 Warnungen |
+| Deploy | ✓ GitHub Pages aktualisiert |
+
+**Live (HTTP-Stichproben nach dem Deploy):** sechs alleinstehende Textlinks mit 44 px Höhe auf der Startseite, Screenreader-Zusatz der
+Wortmarke, präzisierter Impressumssatz, Sprungmarken aus `kennung` auf der Linkseite, Weiterleitung `/konktakt.html` → `/kontakt/`,
+404 für unbekannte Adressen, `robots.txt` ohne Sperre, keine `sitemap.xml`, 40 Zwischentitel mit `id` im Artikel.
+
+**Live-Lighthouse nach dem ersten Fix (30.10.2026, 11:42, Commit 4be9f3d):** Desktop auf allen vier Seiten 100 / 100 / 100 (SEO 63 bis 66
+wegen `noindex`), Mobil Startseite **95** (LCP 3.0 s), Rechtsgebiete 100 (0.9 s), Artikel 100 (1.5 s), Kontakt 100 (0.9 s);
+`label-content-name-mismatch` behoben. Die Codex-Umsetzung änderte am Ladeverhalten nichts (nur CSS-Regel für reduzierte Bewegung,
+Linkklassen, Texte); eine erneute Live-Messung nach Commit dcaa33d war am 30.10.2026 wegen hoher Systemlast auf dem Prüfrechner
+(Abschnitt 11) nicht verlässlich möglich und steht aus.
+
+**Lokal auf dem belasteten Rechner:** Audit 360 px bis zur Artikelseite ohne Befund, danach Puppeteer-Abbruch (Abschnitt 11);
+massgebend sind die CI-Läufe oben.
