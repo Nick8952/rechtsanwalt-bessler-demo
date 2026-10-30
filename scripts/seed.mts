@@ -32,7 +32,7 @@ const assetIds = new Map<string, string>();
 let zaehler = 0;
 const key = (praefix: string) => `${praefix}${(zaehler++).toString(36)}`;
 /** Array-Einträge brauchen in Sanity `_key` und (in gemischten Arrays) `_type`. */
-const liste = <T extends Roh>(eintraege: T[] | undefined, typ: string) => (eintraege ?? []).map((e) => ({ _type: typ, _key: e._key ?? key(typ.slice(0, 3)), ...e }));
+const liste = <T extends Roh>(eintraege: T[] | undefined, typ: string) => (eintraege ?? []).map((e) => ({ _type: typ, _key: e.kennung ?? e._key ?? key(typ.slice(0, 3)), ...e }));
 const verweis = (l: Roh | undefined) => (l ? { _type: "verweis", text: l.text, ziel: l.ziel } : undefined);
 const ohneLeer = (o: Roh) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null));
 const herkunft = (h: Roh[]) => liste(h, "herkunft");
@@ -194,9 +194,17 @@ if (probe) {
     process.exit(1);
   }
   const client = createClient({ projectId, dataset, token, apiVersion: "2025-02-19", useCdn: false });
-  // Bilder hochladen (grösste WebP-Variante, so wie die Demo sie zeigt), dann die Dokumente mit den echten Bildkennungen neu bauen.
+  // Ohne --force werden nur fehlende Dokumente angelegt; sind alle vorhanden, wird auch kein Bild hochgeladen (keine verwaisten Assets).
+  const vorhandene = new Set<string>(await client.fetch(`*[_id in $ids]._id`, { ids: docs.map((d) => d._id) }));
+  if (!force && docs.every((d) => vorhandene.has(d._id))) {
+    console.log(`✓ Alle ${docs.length} Dokumente sind bereits in Sanity vorhanden; nichts geschrieben, keine Bilder hochgeladen (zum Überschreiben: npm run seed -- --force).`);
+    process.exit(0);
+  }
+  // Bilder: vorhandene Assets mit gleichem Dateinamen (der Name trägt einen Inhalts-Hash) wiederverwenden, sonst hochladen (grösste WebP-Variante).
   for (const [id, b] of Object.entries(bilder)) {
     const datei = path.join("public", b.quellen.webp[b.quellen.webp.length - 1].url);
+    const bestehend = await client.fetch<string | null>(`*[_type == "sanity.imageAsset" && originalFilename == $name][0]._id`, { name: path.basename(datei) });
+    if (bestehend) { assetIds.set(id, bestehend); console.log(`  Bild ${id} → ${bestehend} (vorhanden, nicht erneut hochgeladen)`); continue; }
     const asset = await client.assets.upload("image", createReadStream(datei), { filename: path.basename(datei) });
     assetIds.set(id, asset._id);
     console.log(`  Bild ${id} → ${asset._id}`);

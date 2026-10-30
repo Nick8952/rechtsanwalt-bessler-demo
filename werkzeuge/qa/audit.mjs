@@ -8,10 +8,10 @@ const seiten = process.env.SEITEN ? process.env.SEITEN.split(",") : [...alleSeit
 const breiten = (process.env.BREITEN ?? "360,390,768,1440").split(",").map(Number);
 const screenshots = process.env.SCREENSHOTS === "1";
 mkdirSync("pruefung/shots", { recursive: true });
-const browser = await browserStarten();
+let browser = await browserStarten();
 const bericht = [];
-for (const breite of breiten) {
-  for (const seite of seiten) {
+/** Prüft eine Seite in einer Breite in einer frischen Browserumgebung; liefert den Datensatz. */
+async function pruefeSeite(breite, seite) {
     const ctx = await browser.createBrowserContext();
     const p = await ctx.newPage();
     await p.setViewport({ width: breite, height: 900, deviceScaleFactor: 1 });
@@ -34,8 +34,13 @@ for (const breite of breiten) {
         if (el.closest("dialog:not([open])")) return false;
         if (el.classList.contains("nur-sr")) return false;
         if (el.tagName === "LABEL") return false;
-        // Links im Fliesstext sind von der Mindestgrösse ausgenommen (WCAG 2.5.8, Ausnahme «inline»)
-        if (el.tagName === "A" && el.closest("p,li,dd,figcaption,blockquote,address") && getComputedStyle(el).display === "inline") return false;
+        // Links im laufenden Satz sind von der Mindestgrösse ausgenommen (WCAG 2.5.8, Ausnahme «inline»); ein Link, der allein in seinem
+        // Absatz steht, ist ein eigenständiges Bedienziel und wird gemessen.
+        if (el.tagName === "A" && getComputedStyle(el).display === "inline") {
+          const block = el.closest("p,li,dd,figcaption,blockquote,address");
+          const norm = (s) => s.replace(/\s+/g, " ").trim();
+          if (block && norm(block.textContent) !== norm(el.textContent)) return false;
+        }
         const r = el.getBoundingClientRect();
         return r.width < 44 || r.height < 44;
       }).map(name);
@@ -61,7 +66,6 @@ for (const breite of breiten) {
     });
     if (screenshots) await p.screenshot({ path: `pruefung/shots/${seite.replaceAll("/", "_") || "_"}-${breite}.png`, fullPage: true });
     const z = { status: resp?.status(), seite, breite, ...audit, extern: [...new Set(extern)], fehlgeschlagen: [...new Set(fehlgeschlagen)], konsole: konsole.filter((k) => !(/status of 404/.test(k) && resp?.status() === 404)) };
-    bericht.push(z);
     const istFehlerseite = /gibt-es-nicht/.test(seite);
     const probleme = [
       z.status !== 200 && !istFehlerseite ? `status=${z.status}` : "", istFehlerseite && z.status !== 404 ? `Fehlerseite liefert ${z.status} statt 404` : "",
@@ -75,6 +79,22 @@ for (const breite of breiten) {
     z.probleme = probleme;
     console.log(`${z.status} ${breite} ${seite} ${probleme.length ? "→ " + probleme.join(" · ") : "ok"}`);
     await ctx.close();
+    return z;
+}
+for (const breite of breiten) {
+  for (const seite of seiten) {
+    // Puppeteer verliert mit neuen Chrome-Versionen sporadisch den Frame mitten in der Navigation («Navigating frame was detached»).
+    // Das ist kein Befund der Website: bis zu drei Versuche in je frischer Umgebung, erst dann Abbruch.
+    let z;
+    for (let versuch = 1; ; versuch++) {
+      try { z = await pruefeSeite(breite, seite); break; }
+      catch (e) {
+        if (versuch >= 3 || !/detached|LifecycleWatcher|Target closed|Session closed|Connection closed/i.test(String(e))) throw e;
+        console.log(`   (Navigation abgebrochen: ${String(e).split("\n")[0].slice(0, 70)}; Versuch ${versuch + 1})`);
+        if (!browser.connected) { await browser.close().catch(() => {}); browser = await browserStarten(); console.log("   (Browser neu gestartet)"); }
+      }
+    }
+    bericht.push(z);
   }
 }
 await browser.close();

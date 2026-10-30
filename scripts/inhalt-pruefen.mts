@@ -11,10 +11,10 @@
 //  - Quellen: jede Seite mit Belegen; mit --live zusätzlich: alles vom Anwalt freigegeben?
 // Aufruf: npm run inhalt:pruefen   ·   vor dem Go-Live: npm run inhalt:pruefen -- --live
 import { readFileSync, readdirSync } from "node:fs";
-import { createHash } from "node:crypto";
 import path from "node:path";
 import { inhaltsquelle, inhaltsquelleName } from "../lib/content";
 import { pfade } from "../lib/content/modell";
+import { publikationsDigest } from "../lib/content/pruefsummen";
 import { blockText } from "../lib/content/text";
 import { istErlaubtesLinkziel } from "../lib/assets";
 import { offeneFreigaben } from "../lib/content/freigabe";
@@ -64,18 +64,25 @@ for (const { pfad, text } of texte) {
 // Geprüft werden frei formulierte Texte über Kanzlei und Angebot. Ausgenommen: Rechtsseiten, Formular- und Einwilligungstexte, die wörtlich
 // übernommenen Lebenslaufzeilen und die vier Fragen der bisherigen Einleitung (Quelle: bisherige Website).
 const VERBOTEN: [RegExp, string][] = [
-  [/kostenlos|gratis|unverbindliche[sn]? Erstgespräch|kostenlose[sn]? Erstberatung/i, "kostenlose Erstberatung oder Gratisangebot"],
+  [/kostenlos|kostenfrei|gratis|unentgeltlich(?!e Rechtspflege)|unverbindliche[sn]? Erstgespräch|kostenlose[sn]? Erstberatung/i, "kostenlose Erstberatung oder Gratisangebot"],
   [/garantie|garantiert|Erfolg(s)?quote|gewonnen|\d+ ?% /i, "Garantie oder Erfolgsquote"],
   [/Fachanwalt|Fachanwältin|zertifizierte[rn]? Anwalt|Spezialist/i, "Fachanwaltstitel oder Spezialisierung ohne Quelle"],
-  [/Notfall|24 ?Stunden|rund um die Uhr|jederzeit erreichbar|Pikettnummer/i, "Erreichbarkeitsgarantie oder Notfallnummer"],
-  [/innert \d+|innerhalb von \d+|Antwort(zeit)? (innert|innerhalb)|melden uns (innert|innerhalb)/i, "feste Antwortzeit"],
-  [/Honorar|Stundenansatz|\bCHF\b|Franken|Pauschale/i, "Honorarangabe"],
-  [/Bewertung|Sterne\b|\b4[.,]\d\b|Mandanten sagen|Referenzen/i, "Bewertungen oder Mandantenstimmen"],
-  [/\bführende[rn]?\b|beste[rn]? Anwalt|Nr\. ?1|renommiert|erfahrenste/i, "Superlativ"],
-  [/Psychotherapie|Therapie|Heilung|medizinisch/i, "psychotherapeutische oder medizinische Leistung (Coaching ist keine)"],
-  [/Team|Mitarbeitende|unsere Anwälte|Kanzleipartner/i, "Kanzleiteam (Quellen nennen nur Michael Bessler)"],
-  [/Öffnungszeiten|Bürozeiten|Sprechstunde|\b(Mo|Di|Mi|Do|Fr)\s?(-|bis)\s?(Di|Mi|Do|Fr|Sa)\b|\b\d{1,2}[:.]\d{2}\s?(Uhr|bis\s\d)/i, "Öffnungszeiten (nirgends belegt)"],
+  [/Notfall|24 ?Stunden|rund um die Uhr|jederzeit|immer erreichbar|(7|sieben) Tage|365 Tage|am Wochenende|Pikettnummer/i, "Erreichbarkeitsgarantie oder Notfallnummer"],
+  [/innert \d+|innerhalb von \d+|Antwort(zeit)? (innert|innerhalb)|melden uns (innert|innerhalb)|Rückruf/i, "feste Antwortzeit"],
+  [/Honorar|Stundenansatz|\bCHF\b|Franken|\bEuro\b|\bEUR\b|Pauschale|Gebühr(en)?\b|\bTarif|Preis(e|liste|n)?\b|\bKosten\b|Rechnung/i, "Honorar- oder Kostenangabe"],
+  [/Bewertung|Sterne\b|\b[1-5][.,]\d\b|Mandanten sagen|Referenzen|Rezensionen|Erfahrungsberichte/i, "Bewertungen oder Mandantenstimmen"],
+  [/\bführende[rn]?\b|beste[rn]? Anwalt|Nr\. ?1|renommiert|erfahrenste|erstklassig|exzellent|hervorragend|einzigartig|unschlagbar|\btop\b/i, "Superlativ"],
+  [/Psychotherapie|Therapie|Heilung|heilt\b|medizinisch|Diagnose/i, "psychotherapeutische oder medizinische Leistung (Coaching ist keine)"],
+  [/\bTeam\b|Mitarbeitende|Mitarbeiter(in|innen)?\b|Kollegium|Sekretariat|unsere Anwälte|Kanzleipartner|Partner(in|innen)?\b/i, "Kanzleiteam (Quellen nennen nur Michael Bessler)"],
+  [/Öffnungszeiten|Bürozeiten|Sprechstunde|\b(Mo|Di|Mi|Do|Fr)\s?(-|bis)\s?(Di|Mi|Do|Fr|Sa)\b|\b\d{1,2}[:.]\d{2}\s?(Uhr|bis\s\d)|\b(montags|dienstags|mittwochs|donnerstags|freitags)\b/i, "Öffnungszeiten (nirgends belegt)"],
 ];
+// Selbsttest der Sperrliste bei jedem Lauf: Umgehungen müssen anschlagen, belegte Formulierungen nicht (sonst bricht die Prüfung ab).
+{
+  const mussTreffen = ["Erstberatung kostenfrei", "Gebühren nach Aufwand", "Tarif auf Anfrage", "immer erreichbar", "7 Tage die Woche", "erstklassige Vertretung", "unser Kollegium", "montags geöffnet", "Wir melden uns innert 24 Stunden", "4.9 Sterne", "ab 250 Euro"];
+  const darfNicht = ["unentgeltliche Rechtspflege", "Partnerschaft, Familie, Beruf", "weiterführende Links", "Rechtsauskunft, Rechtsberatung, Rechtsvertretung und Strafverteidigung", "Verein Pikett Strafverteidigung", "Mietgericht", "Preisgabe von Daten"];
+  for (const t of mussTreffen) if (!VERBOTEN.some(([m]) => m.test(t))) fehler.push(`Sperrliste-Selbsttest: «${t}» müsste als unbelegte Behauptung erkannt werden`);
+  for (const t of darfNicht) if (VERBOTEN.some(([m]) => m.test(t))) fehler.push(`Sperrliste-Selbsttest: «${t}» darf nicht anschlagen (Muster zu breit)`);
+}
 for (const { pfad, text } of texte) {
   if (/^(impressum|datenschutz|t\.einwilligung|t\.formular|person\.gruppen|start\.einleitung\.fragen)/.test(pfad)) continue;
   for (const [muster, was] of VERBOTEN) if (muster.test(text)) fehler.push(`${pfad}: unbelegte Behauptung (${was}): «${text.slice(0, 80)}»`);
@@ -98,7 +105,7 @@ const anker: Record<string, Set<string>> = {
   [pfade.impressum]: new Set([...impressum.bloecke.flatMap((b) => (b.art === "titel" ? [b.anker] : [])), "bildnachweis"]),
   [pfade.datenschutz]: new Set(datenschutz.bloecke.flatMap((b) => (b.art === "titel" ? [b.anker] : []))),
   [pfade.rechtsgebiete]: new Set(rechtsgebiete.map((r) => `gebiet-${r.slug}`)),
-  [pfade.links]: new Set(links.gruppen.map((g) => `links-${g._key}`)),
+  [pfade.links]: new Set(links.gruppen.map((g) => `links-${g.kennung}`)),
 };
 for (const l of linksListe) {
   if (!istErlaubtesLinkziel(l.ziel)) { fehler.push(`${l.pfad}: Linkziel nicht erlaubt: ${l.ziel}`); continue; }
@@ -125,14 +132,13 @@ for (const r of rechtsgebiete) {
 }
 
 // ── Publikationen: Wortlaut (Prüfsumme der Originalfassung), Sprungmarken, Quelle ──
-// data/publikationen/pruefsummen.json enthält je Werk die SHA-256 des normalisierten Originaltexts (Titel, Publikationshinweis, Text),
+// data/publikationen/pruefsummen.json enthält je Werk die SHA-256 der kanonischen Form (Titel, Publikationshinweis, Untertitel, Blöcke),
 // berechnet bei der Übernahme von der bisherigen Website. Weicht die geladene Fassung ab (lokal oder aus Sanity), ist der Wortlaut verändert.
 const pruefsummen = JSON.parse(readFileSync("data/publikationen/pruefsummen.json", "utf8")) as Record<string, { sha256: string; woerter: number }>;
-const normalisiert = (s: string) => s.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
-const textDigest = (p: (typeof publikationen)[number]) => {
-  const teile = [p.titelOriginal ?? "", p.quellenvermerkOriginal ?? "", p.untertitel ?? "", ...p.bloecke.map(blockText)];
-  return createHash("sha256").update(normalisiert(teile.join(" "))).digest("hex");
-};
+// Die Prüfsumme läuft über die kanonische Form (lib/content/text.ts, kanonisch): auch Blockart, Titelstufe, Listenstil, Auszeichnung und
+// Linkziele sind gesichert. Sie ist eine Integritätsprüfung gegen Versehen, keine manipulationssichere Signatur (Text und Prüfsumme liegen
+// im selben Repository). Neu berechnen nach freigegebener Änderung: npm run pruefsummen -- --schreiben <slug>.
+const textDigest = (p: (typeof publikationen)[number]) => publikationsDigest(p);
 for (const p of publikationen) {
   const soll = pruefsummen[p.slug];
   if (!soll) fehler.push(`Publikation «${p.slug}»: keine Prüfsumme der Originalfassung in data/publikationen/pruefsummen.json`);

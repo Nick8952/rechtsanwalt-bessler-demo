@@ -1,4 +1,4 @@
-import type { Inhaltsquelle } from "./modell";
+import type { Block, Inhaltsquelle } from "./modell";
 import { blockText } from "./text";
 
 /**
@@ -26,7 +26,11 @@ export async function offeneFreigaben(q: Inhaltsquelle): Promise<string[]> {
   pruefe("Kontakt und Anfahrt", "Lage, Anfahrt, Hinweis zur Mandatsannahme", kontakt.belege.freigabe);
   pruefe("Impressum", "Betreiberangaben und Texte", impressum.belege.freigabe);
   pruefe("Datenschutzerklärung", "Verantwortliche und Texte", datenschutz.belege.freigabe);
-  if (impressum.bloecke.some((b) => /\bDemo\b/.test(blockText(b)))) offen.push("Das Impressum beschreibt noch die Demo (Betreiber, Zweck): für den Produktivbetrieb neu schreiben.");
-  if (datenschutz.bloecke.some((b) => /\bDemo\b|GitHub Pages/.test(blockText(b)))) offen.push("Die Datenschutzerklärung beschreibt noch die Demo auf GitHub Pages: an das produktive Hosting anpassen.");
+  // Heuristik, keine Garantie: Merkmale der Demo-Fassung (Zweck, Betreiber, Hosting). Die produktiven Rechtstexte schreibt der Anwalt neu
+  // und gibt sie frei; erst dann darf «freigabe» auf «live» stehen (docs/UEBERGABE.md).
+  const DEMO_MERKMALE = /\bDemo\b|Verkaufs-Demo|GitHub Pages|GitHub, Inc|Nick Holzbecher|holzbechernick|ohne Auftrag/i;
+  const demoText = (seite: { einleitung?: string; bloecke: Block[] }) => [seite.einleitung ?? "", ...seite.bloecke.map(blockText)].find((t) => DEMO_MERKMALE.test(t));
+  const im = demoText(impressum); if (im) offen.push(`Das Impressum beschreibt noch die Demo («${im.match(DEMO_MERKMALE)?.[0]}»): für den Produktivbetrieb neu schreiben (Betreiber, Zweck, Hosting).`);
+  const ds = demoText(datenschutz); if (ds) offen.push(`Die Datenschutzerklärung beschreibt noch die Demo («${ds.match(DEMO_MERKMALE)?.[0]}»): an Verantwortliche und produktives Hosting anpassen.`);
   return offen;
 }

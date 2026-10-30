@@ -56,7 +56,7 @@ export default async function Startseite() {
         <div className="mt-8">
           <Rechtsgebieteliste rechtsgebiete={rechtsgebiete} />
         </div>
-        <p className="mt-6"><SmartLink ziel={s.rechtsgebiete.link.ziel} className="textlink">{s.rechtsgebiete.link.text}</SmartLink></p>
+        <p className="mt-6"><SmartLink ziel={s.rechtsgebiete.link.ziel} className="textlink inline-flex min-h-11 items-center">{s.rechtsgebiete.link.text}</SmartLink></p>
       </Abschnitt>
 
       {/* Person: Text, am Rand das Gemälde der bisherigen Startseite */}
@@ -66,14 +66,14 @@ export default async function Startseite() {
           <p>{s.person.text}</p>
           <p>{s.person.zweiterText}</p>
         </div>
-        <p className="mt-6"><SmartLink ziel={s.person.link.ziel} className="textlink">{s.person.link.text}</SmartLink></p>
+        <p className="mt-6"><SmartLink ziel={s.person.link.ziel} className="textlink inline-flex min-h-11 items-center">{s.person.link.text}</SmartLink></p>
       </Abschnitt>
 
       {/* Coaching: eigener Einstieg */}
       <Abschnitt rand={<Randnotiz text={s.coaching.untertitel} />} labelledBy="coaching-titel">
         <h2 id="coaching-titel" className="titel-2">{s.coaching.titel}</h2>
         <p className="lauftext mt-4">{s.coaching.text}</p>
-        <p className="mt-6"><SmartLink ziel={s.coaching.link.ziel} className="textlink">{s.coaching.link.text}</SmartLink></p>
+        <p className="mt-6"><SmartLink ziel={s.coaching.link.ziel} className="textlink inline-flex min-h-11 items-center">{s.coaching.link.text}</SmartLink></p>
       </Abschnitt>
 
       {/* Publikationen: dezenter Hinweis mit Liste */}
@@ -83,7 +83,7 @@ export default async function Startseite() {
         <div className="mt-8">
           <Publikationsliste publikationen={publikationen} texte={t} />
         </div>
-        <p className="mt-6"><SmartLink ziel={s.publikationen.link.ziel} className="textlink">{s.publikationen.link.text}</SmartLink></p>
+        <p className="mt-6"><SmartLink ziel={s.publikationen.link.ziel} className="textlink inline-flex min-h-11 items-center">{s.publikationen.link.text}</SmartLink></p>
       </Abschnitt>
 
       {/* Kontakt und Anfahrt */}

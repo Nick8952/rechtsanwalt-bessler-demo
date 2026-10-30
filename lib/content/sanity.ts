@@ -43,13 +43,13 @@ const ABFRAGEN = {
   kanzlei: `*[_type == "kanzlei"][0]{ name, person, titel, beruf, taetigkeiten, adresse{ strasse, plz, ort, land, zusatz }, telefon, email, website, karteUrl, coachingUrl, "portrait": portrait${BILD}, "seoBild": seoBild${BILD}, ${HERKUNFT}, "freigabe": coalesce(freigabe, "demo") }`,
   texte: `*[_type == "texte"][0]{ demoHinweis, navigation[]${LINK}, kopf, footer{ ..., "weitere": coalesce(weitere[]${LINK}, []), rechtliches[]${LINK}, bildnachweis${LINK} }, ui{ ..., nichtGefundenLink${LINK} }, publikation, formular{ ..., datenschutzLink${LINK} }, "einwilligung": { ...einwilligung, "kategorien": coalesce(einwilligung.kategorien, []) }, seo }`,
   startseite: `*[_type == "startseite"][0]{ hero{ ..., knopf${LINK}, zweiterKnopf${LINK} }, einleitung, rechtsgebiete{ ..., link${LINK} }, person{ ..., link${LINK}, "bild": bild${BILD} }, coaching{ ..., link${LINK} }, publikationen{ ..., link${LINK} }, kontakt{ ..., link${LINK} }, ${BELEGE}, seoTitel, seoBeschreibung }`,
-  person: `*[_type == "person"][0]{ titel, einleitung, randnotiz, gruppen[]{ _key, titel, eintraege }, bildLegende, ${BELEGE}, seoTitel, seoBeschreibung }`,
+  person: `*[_type == "person"][0]{ titel, einleitung, randnotiz, gruppen[]{ "kennung": coalesce(kennung, _key), titel, eintraege }, bildLegende, ${BELEGE}, seoTitel, seoBeschreibung }`,
   rechtsgebiete: `*[_type == "rechtsgebiet"] | order(reihenfolge asc){ "slug": slug.current, titel, kurz, "bezuege": coalesce(bezuege, []), reihenfolge, ${HERKUNFT}, "freigabe": coalesce(freigabe, "demo") }`,
   rechtsgebieteSeite: `*[_type == "rechtsgebieteSeite"][0]{ titel, einleitung, leistungsformenTitel, leistungsformen, kontaktTitel, kontaktText, kontaktLink${LINK}, "bild": bild${BILD}, linksTitel, linksText, linksLink${LINK}, ${BELEGE}, seoTitel, seoBeschreibung }`,
   coachingSeite: `*[_type == "coachingSeite"][0]{ titel, untertitel, themenTitel, themen, absaetze, ausbildung, "bild": bild${BILD}, externTitel, externText, externLink${LINK}, ${BELEGE}, seoTitel, seoBeschreibung }`,
   publikationen: `*[_type == "publikation"] | order(reihenfolge asc){ "slug": slug.current, art, titel, untertitel, kurztitel, autor, erschienen, erschienenText, quellenvermerk, quellenvermerkOriginal, titelOriginal, quelleUrl, abgerufen, inhalt, reihenfolge, ${HERKUNFT}, "freigabe": coalesce(freigabe, "demo"), seoTitel, seoBeschreibung }`,
   publikationenSeite: `*[_type == "publikationenSeite"][0]{ titel, einleitung, hinweis, ${BELEGE}, seoTitel, seoBeschreibung }`,
-  linkSeite: `*[_type == "linkSeite"][0]{ titel, einleitung, gruppen[]{ _key, titel, links[]{ _key, titel, url, beschreibung, "erreichbar": coalesce(erreichbar, true), hinweis } }, ${BELEGE}, seoTitel, seoBeschreibung }`,
+  linkSeite: `*[_type == "linkSeite"][0]{ titel, einleitung, gruppen[]{ "kennung": coalesce(kennung, _key), titel, links[]{ "kennung": coalesce(kennung, _key), titel, url, beschreibung, "erreichbar": coalesce(erreichbar, true), hinweis } }, ${BELEGE}, seoTitel, seoBeschreibung }`,
   kontaktSeite: `*[_type == "kontaktSeite"][0]{ titel, einleitung, direktTitel, lageTitel, lage, oevTitel, oev, hinweisTitel, hinweis, ${BELEGE}, seoTitel, seoBeschreibung }`,
   rechtSeite: `*[_type == "rechtSeite" && slug.current == $slug][0]{ "slug": slug.current, titel, einleitung, stand, inhalt, ${BELEGE}, seoTitel, seoBeschreibung }`,
 } as const;
@@ -88,17 +88,22 @@ const ausSpiegel: BildAufloeser = (roh) => {
 
 function bild(roh: RohBild, aufloesen: BildAufloeser): Bild | undefined {
   if (!roh.url || !roh.breite || !roh.hoehe) return undefined;
-  return { alt: roh.alt ?? "", ...aufloesen(roh), legende: roh.legende ?? undefined, nachweis: roh.nachweis ?? undefined };
+  // Fehlender Alternativtext oder Nachweis bleibt sichtbar: das Domainmodell lehnt leere Werte mit klarer Meldung ab (Bild aus Sanity ohne Angaben).
+  return { alt: roh.alt ?? "", ...aufloesen(roh), legende: roh.legende ?? undefined, nachweis: { urheber: roh.nachweis?.urheber ?? "", ...(roh.nachweis?.titel ? { titel: roh.nachweis.titel } : {}), quelle: roh.nachweis?.quelle ?? "", lizenz: roh.nachweis?.lizenz ?? "" } };
 }
 
-/** Geht die Antwort rekursiv durch: wandelt Bilder um und entfernt null (GROQ liefert null, das Domainmodell kennt nur «fehlt»). */
+const SYSTEMFELDER = new Set(["_type", "_key", "_id", "_rev", "_createdAt", "_updatedAt", "_system", "_originalId"]);
+/** Geht die Antwort rekursiv durch: wandelt Bilder um, entfernt null (GROQ liefert null, das Domainmodell kennt nur «fehlt») und Sanity-Systemfelder. */
 export function normalisieren(wert: unknown, aufloesen: BildAufloeser = ausCdn): unknown {
   if (wert === null) return undefined;
   if (Array.isArray(wert)) return wert.map((v) => normalisieren(v, aufloesen)).filter((v) => v !== undefined);
   if (istRohBild(wert)) return bild(wert, aufloesen);
   if (typeof wert === "object") {
+    const t = (wert as { _type?: unknown })._type;
+    if (t === "block" || t === "span") return wert; // Portable Text bleibt unverändert: portableTextZuBloecken braucht _type, _key und markDefs
     const aus: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(wert as Record<string, unknown>)) {
+      if (SYSTEMFELDER.has(k)) continue; // Sanity-Systemfelder gehören nicht ins Domainmodell (strikte Schemas); Kennungen heissen «kennung»
       const n = normalisieren(v, aufloesen);
       if (n !== undefined) aus[k] = n;
     }

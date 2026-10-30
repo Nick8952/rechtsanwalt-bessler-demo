@@ -36,7 +36,7 @@ if (siteUrlEnv) {
     throw new Error(`SITE_URL=«${siteUrlEnv}» ist keine gültige http(s)-URL.`);
   }
   if (u.protocol !== "https:" && u.protocol !== "http:") throw new Error(`SITE_URL=«${siteUrlEnv}» ist keine gültige http(s)-URL.`);
-  if (u.pathname !== "/" || u.search || u.hash || u.username) throw new Error(`SITE_URL=«${siteUrlEnv}» darf nur aus Protokoll und Domain bestehen (kein Pfad, keine Parameter).`);
+  if (u.pathname !== "/" || u.search || u.hash || u.username || u.password) throw new Error(`SITE_URL=«${siteUrlEnv}» darf nur aus Protokoll und Domain bestehen (kein Pfad, keine Parameter).`);
   if (basePath) throw new Error(`SITE_URL lässt sich nicht mit dem Unterpfad «${basePath}» kombinieren. Für eine eigene Domain DEPLOY_TARGET=vercel setzen (oder BASE_PATH="" für einen Export an der Domain-Wurzel).`);
   siteUrlHost = u.hostname.toLowerCase();
 }

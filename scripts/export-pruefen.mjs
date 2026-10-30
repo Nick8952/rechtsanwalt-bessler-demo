@@ -20,7 +20,7 @@ const basePath = vercel ? "" : (process.env.BASE_PATH ?? "/rechtsanwalt-bessler-
 const indexierung = process.env.INDEXIERUNG === "1";
 const siteUrl = (process.env.SITE_URL || (vercel ? "https://rechtsanwalt-bessler-demo.vercel.app" : `https://nick8952.github.io${basePath}`)).replace(/\/$/, "");
 // Budgets (unkomprimiert, in Bytes). Bewusst knapp über dem Ist-Stand: Wer sie reisst, soll es merken.
-const BUDGET = { vorgeladenesBild: 60_000, jsJeSeite: 640_000, bildMax: 120_000, webpMax: 200_000, bilderGesamt: 1_000_000 };
+const BUDGET = { vorgeladenesBild: 60_000, jsJeSeite: 640_000, bildMax: 120_000, webpMax: 200_000, jpgMax: 150_000, bilderGesamt: 1_000_000 };
 const fehler = [];
 
 async function dateien(ordner, endung) {
@@ -178,9 +178,10 @@ for (const datei of seiten) {
   }
 }
 let bildSumme = 0;
-for (const b of [...(await dateien(path.join(WURZEL, "bilder"), ".avif")), ...(await dateien(path.join(WURZEL, "bilder"), ".webp"))]) {
+for (const b of (await Promise.all([".avif", ".webp", ".jpg", ".jpeg", ".png"].map((e) => dateien(path.join(WURZEL, "bilder"), e)))).flat()) {
   const g = await groesse(b);
   bildSumme += g;
+  if (/\.(jpe?g|png)$/.test(b) && g > BUDGET.jpgMax) fehler.push(`Bild über Budget: ${path.basename(b)} ${Math.round(g / 1024)} KB (JPEG/PNG-Budget ${Math.round(BUDGET.jpgMax / 1024)} KB)`);
   if (b.endsWith(".avif") && g > BUDGET.bildMax) fehler.push(`Bild über Budget: ${path.basename(b)} ${Math.round(g / 1024)} KB (Budget ${Math.round(BUDGET.bildMax / 1024)} KB)`);
   if (b.endsWith(".webp") && g > BUDGET.webpMax) fehler.push(`Bild über Budget: ${path.basename(b)} ${Math.round(g / 1024)} KB (WebP-Budget ${Math.round(BUDGET.webpMax / 1024)} KB)`);
 }

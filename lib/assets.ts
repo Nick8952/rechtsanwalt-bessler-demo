@@ -23,7 +23,19 @@ export function istExternerLink(ziel: string): boolean {
  * Alles andere (javascript:, data:, http://, protokollrelative URLs) wird abgewiesen; dieselbe Regel gilt im Sanity-Schema.
  */
 export function istErlaubtesLinkziel(ziel: string): boolean {
-  return /^\/(?![\/\\])[^\s\\]*$/.test(ziel) || /^#[A-Za-z][\w-]*$/.test(ziel) || /^(https:\/\/[^\s\\]+|mailto:[^\s]+|tel:\+?[\d\s()-]+)$/.test(ziel);
+  if (/^\/(?![\/\\])[^\s\\]*$/.test(ziel) || /^#[A-Za-z][\w-]*$/.test(ziel) || /^(mailto:[^\s@]+@[^\s@]+|tel:\+?[\d\s()-]+)$/.test(ziel)) return true;
+  return istHttpsAdresse(ziel);
+}
+
+/** Echte https-Adresse: parsebar, Protokoll https, Host vorhanden, keine Benutzerangaben, kein Leerraum oder Backslash. */
+export function istHttpsAdresse(wert: string): boolean {
+  if (!/^https:\/\/[^\s\\]+$/.test(wert)) return false;
+  try {
+    const u = new URL(wert);
+    return u.protocol === "https:" && u.hostname.length > 0 && !u.username && !u.password;
+  } catch {
+    return false;
+  }
 }
 
 /** Liefert das Ziel unverändert oder «#», wenn es nicht erlaubt ist (Schutz vor javascript:-Links aus Inhalten). */

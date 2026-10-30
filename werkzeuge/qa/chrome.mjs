@@ -5,8 +5,21 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 // Immer aus dem Projektstamm arbeiten, egal von wo das Skript gestartet wird
 process.chdir(path.join(path.dirname(fileURLToPath(import.meta.url)), "..", ".."));
+// Chrome for Testing im Projektordner (gitignoriert): npx @puppeteer/browsers install chrome@<Version aus node_modules/puppeteer-core/lib/puppeteer/revisions.js>
+// Es passt genau zur installierten puppeteer-core-Version; das System-Chrome aktualisiert sich selbst und läuft Puppeteer voraus.
+function chromeForTesting() {
+  try {
+    return readdirSync("chrome").flatMap((v) => [
+      path.join("chrome", v, "chrome-mac-arm64", "Google Chrome for Testing.app", "Contents", "MacOS", "Google Chrome for Testing"),
+      path.join("chrome", v, "chrome-mac-x64", "Google Chrome for Testing.app", "Contents", "MacOS", "Google Chrome for Testing"),
+      path.join("chrome", v, "chrome-linux64", "chrome"),
+      path.join("chrome", v, "chrome-win64", "chrome.exe"),
+    ]).filter((p) => existsSync(p)).sort().reverse();
+  } catch { return []; }
+}
 const KANDIDATEN = [
   process.env.CHROME_PATH,
+  ...chromeForTesting(),
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
   "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",

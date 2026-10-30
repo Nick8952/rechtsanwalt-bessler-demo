@@ -20,7 +20,7 @@ export function Fusszeile({ kanzlei: k, texte: t, zeigeDemoHinweis }: { kanzlei:
               <a href={`mailto:${k.email}`} className="kontakt-link">{k.email}</a>
             </address>
             <p className="mt-3">
-              <SmartLink ziel={k.karteUrl} className="textlink">{t.footer.route}</SmartLink>
+              <SmartLink ziel={k.karteUrl} className="textlink inline-flex min-h-11 items-center">{t.footer.route}</SmartLink>
             </p>
           </div>
           <nav aria-label="Seiten (Fusszeile)">

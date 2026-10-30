@@ -44,7 +44,7 @@ function EinwilligungRuhend({ texte: t, datenschutzPfad, schliessen }: { texte: 
       <div className="grid gap-4 p-6">
         <h2 id={`${id}-titel`} className="titel-3">{t.ruhendTitel}</h2>
         <p className="klein text-tinte-2">{t.ruhendText}</p>
-        <p className="klein"><Link href={datenschutzPfad} className="textlink" onClick={() => setDialogOffen(false)}>{t.datenschutzerklaerung}</Link></p>
+        <p className="klein"><Link href={datenschutzPfad} className="textlink inline-flex min-h-11 items-center" onClick={() => setDialogOffen(false)}>{t.datenschutzerklaerung}</Link></p>
         <form method="dialog"><button type="submit" className="knopf knopf-primaer knopf-klein">{schliessen}</button></form>
       </div>
     </dialog>

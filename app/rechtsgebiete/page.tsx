@@ -40,7 +40,7 @@ export default async function RechtsgebieteSeite() {
         <div className="mt-12 border-t border-linie pt-8">
           <h2 className="titel-3">{s.linksTitel}</h2>
           <p className="lauftext mt-3 text-tinte-2">{s.linksText}</p>
-          <p className="mt-4"><SmartLink ziel={s.linksLink.ziel} className="textlink">{s.linksLink.text}</SmartLink></p>
+          <p className="mt-4"><SmartLink ziel={s.linksLink.ziel} className="textlink inline-flex min-h-11 items-center">{s.linksLink.text}</SmartLink></p>
         </div>
       </Abschnitt>
     </>

@@ -30,3 +30,6 @@ next-env.d.ts
 # System
 .DS_Store
 npm-debug.log*
+
+# Chrome for Testing für die Browser-Prüfungen (npx @puppeteer/browsers install chrome@<Version>), nie versionieren
+/chrome/

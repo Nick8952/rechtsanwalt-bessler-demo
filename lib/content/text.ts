@@ -72,6 +72,16 @@ export function blockText(b: Block): string {
   return inlineText(b.inhalt);
 }
 
+/**
+ * Kanonische Form eines Textes für Prüfsummen: Blockart, Titelstufe, Listenstil, Fett/Kursiv, Linkziele und Zeilenumbrüche
+ * fliessen ein, Leerraum wird vereinheitlicht. Sprungmarken nicht (sie werden aus den Titeln abgeleitet). Gleich für lokale Inhalte und Sanity.
+ */
+export function kanonisch(bloecke: Block[]): string {
+  const norm = (s: string) => s.replace(/\u00a0/g, " ").replace(/[ \t]+/g, " ").replace(/ *\n */g, "↵");
+  const inl = (teile: Inline[]) => teile.map((t) => (typeof t === "string" ? norm(t) : `${t.fett ? "**" : ""}${t.kursiv ? "*" : ""}${t.link ? `[${norm(t.text)}](${t.link})` : norm(t.text)}${t.kursiv ? "*" : ""}${t.fett ? "**" : ""}`)).join("").trim();
+  return bloecke.map((b) => (b.art === "titel" ? `h${b.stufe}: ${norm(b.text).trim()}` : b.art === "liste" ? `${b.stil ?? "punkte"}: ${b.punkte.map(inl).join(" | ")}` : `${b.art}: ${inl(b.inhalt)}`)).join("\n");
+}
+
 /** Zwischentitel eines Textes als Inhaltsverzeichnis. */
 export function inhaltsverzeichnis(bloecke: Block[]): { stufe: 2 | 3 | 4; text: string; anker: string }[] {
   return bloecke.flatMap((b) => (b.art === "titel" ? [{ stufe: b.stufe, text: b.text, anker: b.anker }] : []));

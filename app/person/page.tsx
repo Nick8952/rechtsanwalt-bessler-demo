@@ -22,8 +22,8 @@ export default async function PersonSeite() {
         <Figur bild={k.portrait} sizes="(min-width: 64rem) 652px, 100vw" legende={p.bildLegende} prio />
         <div className="mt-10 grid gap-10 sm:grid-cols-2">
           {p.gruppen.map((g) => (
-            <section key={g._key} aria-labelledby={`gruppe-${g._key}`}>
-              <h2 id={`gruppe-${g._key}`} className="titel-3">{g.titel}</h2>
+            <section key={g.kennung} aria-labelledby={`gruppe-${g.kennung}`}>
+              <h2 id={`gruppe-${g.kennung}`} className="titel-3">{g.titel}</h2>
               <ul className="mt-3 grid gap-2 border-t border-linie pt-3">
                 {g.eintraege.map((e) => <li key={e}>{e}</li>)}
               </ul>

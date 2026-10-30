@@ -11,8 +11,11 @@ function Teile({ teile }: { teile: Inline[] }) {
     <>
       {teile.map((t, i) => {
         if (typeof t === "string") return mitUmbruechen(t, String(i));
-        if (t.link) return <SmartLink key={i} ziel={t.link}>{t.text}</SmartLink>;
         const inhalt = mitUmbruechen(t.text, String(i));
+        if (t.link) {
+          const innen = t.fett && t.kursiv ? <strong><em>{inhalt}</em></strong> : t.fett ? <strong>{inhalt}</strong> : t.kursiv ? <em>{inhalt}</em> : inhalt;
+          return <SmartLink key={i} ziel={t.link}>{innen}</SmartLink>;
+        }
         if (t.fett && t.kursiv) return <strong key={i}><em>{inhalt}</em></strong>;
         if (t.fett) return <strong key={i}>{inhalt}</strong>;
         if (t.kursiv) return <em key={i}>{inhalt}</em>;

@@ -2,16 +2,83 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build:vercel",
   "installCommand": "npm ci",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'none'"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        }
+      ]
+    }
+  ],
   "redirects": [
-    { "source": "/home.html", "destination": "/", "permanent": true },
-    { "source": "/personlich.html", "destination": "/person/", "permanent": true },
-    { "source": "/rechtsgebiete.html", "destination": "/rechtsgebiete/", "permanent": true },
-    { "source": "/coaching.html", "destination": "/coaching/", "permanent": true },
-    { "source": "/konktakt.html", "destination": "/kontakt/", "permanent": true },
-    { "source": "/kontakt.html", "destination": "/kontakt/", "permanent": true },
-    { "source": "/links.html", "destination": "/links/", "permanent": true },
-    { "source": "/_die_geistgeschichtlichen_grundlagen_des_deutschen.html", "destination": "/publikationen/geistesgeschichtliche-grundlagen-des-deutschen-rechts/", "permanent": true },
-    { "source": "/_der_mann_ohne_eigenschaften-1.html", "destination": "/publikationen/der-mann-ohne-eigenschaften/", "permanent": true },
-    { "source": "/_der_mann_ohne_eigenschaften.html", "destination": "/publikationen/thesen-der-mann-ohne-eigenschaften/", "permanent": true }
+    {
+      "source": "/home.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/personlich.html",
+      "destination": "/person/",
+      "permanent": true
+    },
+    {
+      "source": "/rechtsgebiete.html",
+      "destination": "/rechtsgebiete/",
+      "permanent": true
+    },
+    {
+      "source": "/coaching.html",
+      "destination": "/coaching/",
+      "permanent": true
+    },
+    {
+      "source": "/konktakt.html",
+      "destination": "/kontakt/",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt.html",
+      "destination": "/kontakt/",
+      "permanent": true
+    },
+    {
+      "source": "/links.html",
+      "destination": "/links/",
+      "permanent": true
+    },
+    {
+      "source": "/_die_geistgeschichtlichen_grundlagen_des_deutschen.html",
+      "destination": "/publikationen/geistesgeschichtliche-grundlagen-des-deutschen-rechts/",
+      "permanent": true
+    },
+    {
+      "source": "/_der_mann_ohne_eigenschaften-1.html",
+      "destination": "/publikationen/der-mann-ohne-eigenschaften/",
+      "permanent": true
+    },
+    {
+      "source": "/_der_mann_ohne_eigenschaften.html",
+      "destination": "/publikationen/thesen-der-mann-ohne-eigenschaften/",
+      "permanent": true
+    }
   ]
 }

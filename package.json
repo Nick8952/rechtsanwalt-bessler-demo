@@ -15,11 +15,12 @@
     "typecheck": "tsc --noEmit",
     "bilder": "node scripts/bilder-optimieren.mjs",
     "inhalt:pruefen": "tsx --conditions=react-server scripts/inhalt-pruefen.mts",
-    "pruefen": "npm run inhalt:pruefen && npm run lint && npm run typecheck",
+    "pruefen": "npm run inhalt:pruefen && npm run lint && npm run typecheck && node werkzeuge/qa/kontrast.mjs",
     "export:pruefen": "node scripts/export-pruefen.mjs",
     "vorschau:pages": "node scripts/vorschau-server.mjs",
     "qa": "node werkzeuge/qa/audit.mjs && node werkzeuge/qa/funktionen.mjs",
-    "seed": "tsx --conditions=react-server scripts/seed.mts"
+    "seed": "tsx --conditions=react-server scripts/seed.mts",
+    "pruefsummen": "tsx --conditions=react-server scripts/pruefsummen.mts"
   },
   "dependencies": {
     "@fontsource-variable/hanken-grotesk": "^5.3.0",

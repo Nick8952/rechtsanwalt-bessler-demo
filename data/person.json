@@ -4,7 +4,7 @@
   "randnotiz": "lic. iur., Rechtsanwalt, Strafverteidiger, Coach (zert. IKP)",
   "gruppen": [
     {
-      "_key": "beruflich",
+      "kennung": "beruflich",
       "titel": "Berufliche Tätigkeiten",
       "eintraege": [
         "Rechtsanwalt lic. iur. und langjähriger Strafverteidiger",
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "_key": "fruehere-juristische",
+      "kennung": "fruehere-juristische",
       "titel": "Frühere juristische Tätigkeiten",
       "eintraege": [
         "Öffentliche Rechtsberatung beim MVZ",
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "_key": "andere-fruehere",
+      "kennung": "andere-fruehere",
       "titel": "Andere frühere Tätigkeiten",
       "eintraege": [
         "Lehrer für Schauspiel und Szenenstudium",
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "_key": "ausbildung",
+      "kennung": "ausbildung",
       "titel": "Ausbildung",
       "eintraege": [
         "Psychologisches Coaching am Institut für Körperzentrierte Psychologie (IKP) in Zürich",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "_key": "mitgliedschaften",
+      "kennung": "mitgliedschaften",
       "titel": "Mitgliedschaften",
       "eintraege": [
         "DJZ (Demokratische Juristinnen und Juristen Zürich)",

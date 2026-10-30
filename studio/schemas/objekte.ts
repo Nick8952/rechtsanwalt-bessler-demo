@@ -1,8 +1,9 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 /** Dieselbe Regel wie lib/assets.ts (istErlaubtesLinkziel): interne Seite, Sprungmarke, https, E-Mail oder Telefon. */
+const httpsOk = (wert: string) => { if (!/^https:\/\/[^\s\\]+$/.test(wert)) return false; try { const u = new URL(wert); return u.protocol === "https:" && u.hostname.length > 0 && !u.username && !u.password; } catch { return false; } };
 export const linkzielErlaubt = (ziel: string | undefined) =>
-  !ziel || /^\/(?![\/\\])[^\s\\]*$/.test(ziel) || /^#[A-Za-z][\w-]*$/.test(ziel) || /^(https:\/\/[^\s\\]+|mailto:[^\s]+|tel:\+?[\d\s()-]+)$/.test(ziel) ? true : "Erlaubt sind interne Seiten («/kontakt/»), Sprungmarken («#anker»), https://-Adressen, mailto: und tel:.";
+  !ziel || /^\/(?![\/\\])[^\s\\]*$/.test(ziel) || /^#[A-Za-z][\w-]*$/.test(ziel) || /^(mailto:[^\s@]+@[^\s@]+|tel:\+?[\d\s()-]+)$/.test(ziel) || httpsOk(ziel) ? true : "Erlaubt sind interne Seiten («/kontakt/»), Sprungmarken («#anker»), https://-Adressen, mailto: und tel:.";
 
 /** Schweizer Schreibweise und ruhige Satzzeichen: gilt für alle Website-Texte (nicht für den Wortlaut der Publikationen). */
 export const schreibweise = (text: string | undefined) => {
@@ -88,6 +89,7 @@ export const lebenslaufGruppe = defineType({
   title: "Gruppe im Lebenslauf",
   type: "object",
   fields: [
+    defineField({ name: "kennung", title: "Kennung", type: "string", description: "Kleinbuchstaben, Ziffern, Bindestriche; bildet die Sprungmarke und bleibt stabil (zum Beispiel «ausbildung»)", validation: (r) => r.required().regex(/^[a-z0-9][a-z0-9-]*$/, { name: "Kennung", invert: false }) }),
     defineField({ name: "titel", title: "Titel", type: "string", description: "Zum Beispiel «Ausbildung» oder «Mitgliedschaften»", validation: (r) => r.required().custom(schreibweise) }),
     defineField({ name: "eintraege", title: "Einträge", type: "array", of: [defineArrayMember({ type: "string", validation: (r) => r.custom(schreibweise) })], validation: (r) => r.required().min(1) }),
   ],
@@ -99,6 +101,7 @@ export const linkEintrag = defineType({
   title: "Link",
   type: "object",
   fields: [
+    defineField({ name: "kennung", title: "Kennung", type: "string", description: "Kleinbuchstaben, Ziffern, Bindestriche; bildet die Sprungmarke und bleibt stabil (zum Beispiel «ausbildung»)", validation: (r) => r.required().regex(/^[a-z0-9][a-z0-9-]*$/, { name: "Kennung", invert: false }) }),
     defineField({ name: "titel", title: "Bezeichnung", type: "string", validation: (r) => r.required().custom(schreibweise) }),
     defineField({ name: "url", title: "Adresse", type: "url", validation: (r) => r.required().uri({ scheme: ["https"] }) }),
     defineField({ name: "beschreibung", title: "Beschreibung (optional)", type: "string", validation: (r) => r.custom(schreibweise) }),
@@ -113,6 +116,7 @@ export const linkGruppe = defineType({
   title: "Linkgruppe",
   type: "object",
   fields: [
+    defineField({ name: "kennung", title: "Kennung", type: "string", description: "Kleinbuchstaben, Ziffern, Bindestriche; bildet die Sprungmarke und bleibt stabil (zum Beispiel «ausbildung»)", validation: (r) => r.required().regex(/^[a-z0-9][a-z0-9-]*$/, { name: "Kennung", invert: false }) }),
     defineField({ name: "titel", title: "Titel", type: "string", validation: (r) => r.required().custom(schreibweise) }),
     defineField({ name: "links", title: "Links", type: "array", of: [defineArrayMember({ type: "linkEintrag" })], validation: (r) => r.required().min(1) }),
   ],

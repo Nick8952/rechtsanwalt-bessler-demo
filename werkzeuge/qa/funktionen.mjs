@@ -6,13 +6,33 @@ import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { BASE, alleSeiten, browserStarten, externeAnfragen, publikationen, warten } from "./chrome.mjs";
 const ergebnisse = [];
 const ok = (name, bedingung, detail = "") => { ergebnisse.push({ name, ok: !!bedingung, detail }); console.log(`${bedingung ? "✓" : "✗"} ${name}${detail ? " · " + detail : ""}`); };
-const browser = await browserStarten();
+let browser = await browserStarten();
 const kanzlei = JSON.parse(readFileSync("data/kanzlei.json", "utf8"));
 const weiterleitungen = JSON.parse(readFileSync("data/weiterleitungen.json", "utf8"));
 const TEL = "tel:+41439603628";
 const EMAIL = kanzlei.email;
+/**
+ * Jede Gruppe läuft in frischen Browserumgebungen. Puppeteer verliert mit neuen Chrome-Versionen (und unter hoher Systemlast) sporadisch
+ * den Frame mitten in der Navigation («Navigating frame was detached»). Das ist kein Befund der Website: Die Gruppe wird dann bis zu dreimal
+ * von vorn wiederholt, Teilergebnisse des abgebrochenen Versuchs werden verworfen.
+ */
+const offeneKontexte = [];
+async function gruppe(fn) {
+  for (let versuch = 1; ; versuch++) {
+    const stand = ergebnisse.length;
+    try { return await fn(); }
+    catch (e) {
+      ergebnisse.length = stand;
+      for (const c of offeneKontexte.splice(0)) await c.close().catch(() => {});
+      if (versuch >= 3 || !/detached|LifecycleWatcher|Target closed|Session closed|Connection closed/i.test(String(e))) throw e;
+      console.log(`   (Navigation abgebrochen: ${String(e).split("\n")[0].slice(0, 70)}; Gruppe wird wiederholt, Versuch ${versuch + 1})`);
+      if (!browser.connected) { await browser.close().catch(() => {}); browser = await browserStarten(); console.log("   (Browser neu gestartet)"); }
+    }
+  }
+}
 async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = false } = {}) {
   const ctx = await browser.createBrowserContext();
+  offeneKontexte.push(ctx);
   const page = await ctx.newPage();
   await page.setViewport({ width: breite, height: hoehe });
   const medien = [];
@@ -23,7 +43,7 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
 }
 
 // 1) Erstbesuch: nichts von Dritten, kein Banner, kein Speicher, Demo-Kennzeichnung
-{
+await gruppe(async () => {
   const { ctx, page, extern } = await frisch();
   await page.goto(BASE + "/", { waitUntil: "networkidle0" }); await warten(400);
   ok("Erstbesuch: keine Anfragen an fremde Hosts", extern.length === 0, extern.join(","));
@@ -42,10 +62,10 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
   await page.keyboard.press("Escape"); await warten(200);
   ok("Footer: Escape schliesst den Hinweis", !(await page.$("dialog[open]")));
   await ctx.close();
-}
+});
 
 // 2) Kontaktwege: Telefon und E-Mail sofort bedienbar, Karte nur als externer Link
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch();
   for (const seite of ["/", "/kontakt/"]) {
     await page.goto(BASE + seite, { waitUntil: "networkidle0" });
@@ -61,10 +81,10 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
   ok(`Links: ${links.length} externe Links, alle https, neues Fenster, noopener`, links.length >= 8 && links.every((l) => l.href.startsWith("https://") && l.target === "_blank" && /noopener/.test(l.rel)));
   ok("Links: nicht erreichbare Ziele (Psychex) erscheinen nicht", !links.some((l) => /psychex/.test(l.href)));
   await ctx.close();
-}
+});
 
 // 3) Tastatur: Sprunglink, Fokusring, Reihenfolge, aktuelle Seite
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch();
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
   await page.keyboard.press("Tab");
@@ -84,10 +104,10 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
   await page.goto(BASE + "/publikationen/" + publikationen()[0] + "/", { waitUntil: "networkidle0" });
   ok("Navigation: Artikelseite markiert «Publikationen» als aktuell", await page.evaluate(() => document.querySelector('header a[aria-current="page"]')?.textContent?.trim() === "Publikationen"));
   await ctx.close();
-}
+});
 
 // 4) Handy (360 px): Menü als Dialog, Touch-Ziele, kein horizontales Scrollen, Einstieg im ersten Bildschirm
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch({ breite: 360, hoehe: 740 });
   await page.goto(BASE + "/rechtsgebiete/", { waitUntil: "networkidle0" });
   const knopf = await page.$('header button[aria-haspopup="dialog"]');
@@ -113,10 +133,10 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
   ok("Mobil: Einstieg zeigt Titel und «Kontakt aufnehmen» im ersten Bildschirm (360 × 740)", await page.evaluate(() => { const h = document.querySelector("h1").getBoundingClientRect(); const k = [...document.querySelectorAll("main a")].find((a) => a.textContent.trim().startsWith("Kontakt aufnehmen")).getBoundingClientRect(); return h.top >= 0 && k.bottom <= innerHeight; }));
   await ctx.close();
-}
+});
 
 // 5) Publikationen: Inhaltsverzeichnis, Sprungmarken, Lesemass, Zitate, Druckansicht
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch();
   const slug = "der-mann-ohne-eigenschaften";
   await page.goto(BASE + `/publikationen/${slug}/`, { waitUntil: "networkidle0" });
@@ -153,11 +173,11 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
     ok(`Publikation ${s}: genau eine h1, Autor und Hinweis auf historischen Text sichtbar`, await page.evaluate(() => document.querySelectorAll("main h1").length === 1 && document.body.textContent.includes("Michael Bessler") && document.body.textContent.includes("keine aktuelle Rechtsauskunft")));
   }
   await ctx.close();
-}
+});
 
 // 6) mailto-Formular: Prüfung, kodierter Link, kein Versand. Die Navigation zu mailto: wird über das Chrome-Protokoll
 //    beobachtet (Page.frameRequestedNavigation); es öffnet sich kein Programm, und es wird nichts gesendet.
-{
+await gruppe(async () => {
   const { ctx, page, extern } = await frisch();
   const cdp = await page.createCDPSession();
   await cdp.send("Page.enable");
@@ -190,20 +210,20 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
   ok("Formular: Hinweis nach dem Klick nennt das E-Mail-Programm und die Adresse (keine Erfolgsmeldung)", /E-Mail-Programm/.test(status) && status.includes(EMAIL) && !/gesendet/.test(status), status.slice(0, 80));
   ok("Formular: nichts an einen Server gesendet, keine Anfragen an fremde Hosts", gesendet.length === 0 && extern.length === 0, [...gesendet, ...extern].join(","));
   await ctx.close();
-}
+});
 
 // 7) Alte Adressen: Weiterleitungsseiten führen auf die neuen Seiten
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch();
   for (const w of weiterleitungen) {
     await page.goto(BASE + w.alt, { waitUntil: "networkidle0" }); await warten(300);
     ok(`Weiterleitung ${w.alt} → ${w.neu}`, page.url() === BASE + w.neu || page.url() === BASE + w.neu + "#", page.url().replace(BASE, ""));
   }
   await ctx.close();
-}
+});
 
 // 8) Fehlerseite, Direktaufrufe, Neuladen
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch();
   const r = await page.goto(BASE + "/diese-seite-gibt-es-nicht/", { waitUntil: "networkidle0" });
   ok("Fehlerseite: 404 mit gestalteter Seite und Link zur Startseite", r.status() === 404 && (await page.evaluate(() => document.querySelector("h1")?.textContent.includes("gibt es nicht") && !!document.querySelector('main a[href$="/rechtsanwalt-bessler-demo/"], main a[href="/"]'))));
@@ -213,20 +233,21 @@ async function frisch({ breite = 1440, hoehe = 900, reduziert = false, dunkel = 
     ok(`Direktaufruf + Neuladen ${s}: 200, genau eine h1`, r2.status() === 200 && (await page.evaluate(() => document.querySelectorAll("main h1").length === 1)));
   }
   await ctx.close();
-}
+});
 
 // 9) Reduzierte Bewegung und dunkles Schema
-{
+await gruppe(async () => {
   const { ctx, page } = await frisch({ reduziert: true });
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
   ok("Reduzierte Bewegung: kein scroll-behavior smooth", (await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)) === "auto");
+  ok("Reduzierte Bewegung: keine Übergänge auf Knöpfen, Links, Navigation und Aufklappern", await page.evaluate(() => { const els = [...document.querySelectorAll(".knopf, .textlink, .navlink, summary, .zeile-pfeil")]; return els.length > 0 && els.every((el) => parseFloat(getComputedStyle(el).transitionDuration) <= 0.011); }));
   await ctx.close();
   const d = await frisch({ dunkel: true });
   await d.page.goto(BASE + "/", { waitUntil: "networkidle0" });
   const farben = await d.page.evaluate(() => ({ bg: getComputedStyle(document.body).backgroundColor, text: getComputedStyle(document.body).color }));
   ok("Dunkles Schema: dunkler Grund, helle Schrift", /rgb\(21, 22, 20\)/.test(farben.bg) && /rgb\(236, 235, 228\)/.test(farben.text), JSON.stringify(farben));
   await d.ctx.close();
-}
+});
 
 await browser.close();
 mkdirSync("pruefung", { recursive: true });

@@ -24,18 +24,18 @@ export default async function LinksSeite() {
         rand={
           <nav aria-label="Gruppen" className="rand-kleb">
             <ul className="grid gap-1">
-              {gruppen.map((g) => <li key={g._key}><a href={`#links-${g._key}`} className="textlink inline-flex min-h-11 items-center">{g.titel}</a></li>)}
+              {gruppen.map((g) => <li key={g.kennung}><a href={`#links-${g.kennung}`} className="textlink inline-flex min-h-11 items-center">{g.titel}</a></li>)}
             </ul>
           </nav>
         }
       >
         <div className="grid gap-10">
           {gruppen.map((g) => (
-            <section key={g._key} id={`links-${g._key}`} aria-labelledby={`links-${g._key}-titel`} className="scroll-mt-6">
-              <h2 id={`links-${g._key}-titel`} className="titel-3">{g.titel}</h2>
+            <section key={g.kennung} id={`links-${g.kennung}`} aria-labelledby={`links-${g.kennung}-titel`} className="scroll-mt-6">
+              <h2 id={`links-${g.kennung}-titel`} className="titel-3">{g.titel}</h2>
               <ul className="mt-3 grid">
                 {g.links.map((l) => (
-                  <li key={l._key} className="border-t border-linie py-3 last:border-b">
+                  <li key={l.kennung} className="border-t border-linie py-3 last:border-b">
                     <SmartLink ziel={l.url} className="textlink inline-flex min-h-11 items-center">{l.titel}</SmartLink>
                     {l.beschreibung ? <p className="klein mt-1 text-tinte-2">{l.beschreibung}</p> : null}
                   </li>
