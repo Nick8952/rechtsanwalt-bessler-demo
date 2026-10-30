@@ -9,7 +9,7 @@ export async function RechtSeite({ slug }: { slug: "impressum" | "datenschutz" }
   return (
     <>
       <Seitenkopf titel={seite.titel} einleitung={seite.einleitung} />
-      <div className="behaelter pb-16 pt-6 lg:pb-24">
+      <div className="behaelter pb-16 pt-6 @3xl:pb-24">
         <p className="klein text-grau">{t.ui.stand}: {seite.stand}</p>
         <div className="mt-6">
           <RichText bloecke={seite.bloecke} />

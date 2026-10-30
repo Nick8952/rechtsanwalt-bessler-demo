@@ -8,8 +8,8 @@ import { SmartLink } from "./SmartLink";
 export function Fusszeile({ kanzlei: k, texte: t, zeigeDemoHinweis }: { kanzlei: Kanzlei; texte: Texte; zeigeDemoHinweis: boolean }) {
   return (
     <footer className="fuss border-t border-linie">
-      <div className="behaelter py-12 lg:py-16">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="behaelter py-12 @3xl:py-16">
+        <div className="grid gap-10 @2xl:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="wortmarke-name">{k.person}</p>
             <p className="klein mt-2 max-w-[36ch] text-tinte-2">{t.footer.leitsatz}</p>
@@ -26,9 +26,8 @@ export function Fusszeile({ kanzlei: k, texte: t, zeigeDemoHinweis }: { kanzlei:
           <nav aria-label="Seiten (Fusszeile)">
             <h2 className="titel-4">{t.footer.seitenTitel}</h2>
             <ul className="mt-3 grid gap-1">
-              <li><Link href="/" className="inline-flex min-h-11 items-center hover:text-akzent">Startseite</Link></li>
               {[...t.navigation, ...t.footer.weitere].map((n) => (
-                <li key={n.ziel}><Link href={n.ziel} className="inline-flex min-h-11 items-center hover:text-akzent">{n.text}</Link></li>
+                <li key={n.ziel}><Link href={n.ziel} className="inline-flex min-h-11 min-w-11 items-center hover:text-akzent">{n.text}</Link></li>
               ))}
             </ul>
           </nav>
@@ -36,10 +35,10 @@ export function Fusszeile({ kanzlei: k, texte: t, zeigeDemoHinweis }: { kanzlei:
             <h2 className="titel-4">{t.footer.rechtlichesTitel}</h2>
             <ul className="mt-3 grid gap-1">
               {t.footer.rechtliches.map((n) => (
-                <li key={n.ziel}><Link href={n.ziel} className="inline-flex min-h-11 items-center hover:text-akzent">{n.text}</Link></li>
+                <li key={n.ziel}><Link href={n.ziel} className="inline-flex min-h-11 min-w-11 items-center hover:text-akzent">{n.text}</Link></li>
               ))}
               <li><EinwilligungFussLink titel={t.einwilligung.fussLink} /></li>
-              <li><SmartLink ziel={t.footer.bildnachweis.ziel} className="inline-flex min-h-11 items-center hover:text-akzent">{t.footer.bildnachweis.text}</SmartLink></li>
+              <li><SmartLink ziel={t.footer.bildnachweis.ziel} className="inline-flex min-h-11 min-w-11 items-center hover:text-akzent">{t.footer.bildnachweis.text}</SmartLink></li>
             </ul>
           </div>
         </div>

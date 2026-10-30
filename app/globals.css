@@ -104,20 +104,22 @@ img { max-width: 100%; height: auto; }
 .abschnitt-knapp { padding-block: clamp(2rem, 4vw, 3rem); }
 .trenner { border-top: 1px solid var(--color-linie); }
 
-/* Die Randspalte: links schmal (Randnotiz, Inhaltsverzeichnis, Bildlegende), rechts der Inhalt. Unter 64 rem eine Spalte. */
+/* Die Randspalte: links schmal (Randnotiz, Inhaltsverzeichnis, Bildlegende), rechts der Inhalt. Massgebend ist die Breite des
+   aufgefalteten Blatts (Container «blatt»), nicht die des Fensters: unter 48 rem Blattbreite eine Spalte. */
 .raster {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem 3rem;
 }
-@media (min-width: 64rem) {
-  .raster { grid-template-columns: 15rem minmax(0, 1fr); gap: 1.5rem 4rem; }
+@container blatt (min-width: 48rem) {
+  .raster { grid-template-columns: 14rem minmax(0, 1fr); gap: 1.5rem 3.5rem; }
 }
 .rand-kleb { position: sticky; top: 1.5rem; }
 
-/* Einstieg: Text links, Portrait rechts in Originalgrösse (nie hochskaliert) */
+/* Einstieg: Text links, Portrait rechts in Originalgrösse (nie hochskaliert); zweispaltig erst ab 56 rem Blattbreite, damit der
+   Titel «Strafverteidigung,» in der linken Spalte nie mitten im Wort bricht */
 .hero-raster { display: grid; gap: 2.5rem; }
-@media (min-width: 64rem) {
+@container blatt (min-width: 56rem) {
   .hero-raster { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; gap: 4rem; }
 }
 
@@ -190,20 +192,46 @@ img { max-width: 100%; height: auto; }
   .wortmarke { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0.2rem; }
   .wortmarke-name { font-size: 1.25rem; }
   .wortmarke-beruf { font-size: 0.8rem; }
-  .knopf-menue { padding-inline: 0.7rem; gap: 0.4rem; }
 }
-.navlink {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding: 0 0.1rem;
-  font-weight: 500;
+
+/* ── Leporello: alle Seiten nebeneinander, die aktuelle aufgefaltet ───── */
+/* Unter 64 rem: das Register sind Reiter über dem Inhalt, drei je Zeile, jeder mindestens 48 px hoch. */
+.leporello { display: block; }
+/* Hairlines zwischen den Reitern als Schatten je Zelle: stimmt für zwei bis sechs Einträge (Modell: höchstens sechs), ohne Zählregeln. */
+.register { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--color-linie); overflow: hidden; }
+.streifen {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 3rem; padding: 0.5rem 0.6rem;
+  font-family: var(--font-serif); font-size: 1.05rem; font-weight: 500; line-height: 1.2; text-align: center;
   color: var(--color-tinte);
-  border-bottom: 2px solid transparent;
-  transition: border-color 160ms var(--ease-aus), color 160ms var(--ease-aus);
+  box-shadow: 1px 1px 0 var(--color-linie);
+  transition: background-color 160ms var(--ease-aus), color 160ms var(--ease-aus);
 }
-.navlink:hover { border-bottom-color: var(--color-linie-stark); }
-.navlink[aria-current="page"] { border-bottom-color: var(--color-akzent); color: var(--color-akzent); }
+.streifen:hover { background: var(--color-flaeche-2); }
+.streifen[aria-current="page"] { background: var(--color-akzent-hell); color: var(--color-akzent); box-shadow: inset 0 -3px 0 var(--color-akzent); }
+.blatt { container-type: inline-size; container-name: blatt; min-width: 0; }
+/* Ab 70 rem: Streifen von 3.5 rem Breite, senkrecht beschriftet (von unten nach oben wie ein Buchrücken), am oberen Rand klebend;
+   das aufgefaltete Blatt liegt rechts neben seinem Streifen, der als «Rücken» sichtbar und zugänglich bleibt (aria-current).
+   70 rem, damit das Blatt beim Umschalten mindestens 49 rem breit ist (sechs Streifen) und die Spalten im Blatt nicht zurückklappen.
+   Alles ohne JavaScript: Flex-Order aus --i und --aktiv. */
+@media (min-width: 70rem) {
+  .leporello { display: flex; align-items: stretch; min-height: 100dvh; }
+  .register { display: contents; }
+  .streifen {
+    order: var(--i, 0);
+    position: sticky; top: 0; align-self: flex-start;
+    flex: 0 0 3.5rem; width: 3.5rem; height: 100dvh;
+    flex-direction: column; justify-content: flex-start; align-items: center; padding: 1.75rem 0; text-align: initial;
+    font-size: 1.1rem;
+    overflow: hidden; box-shadow: none; border-left: 1px solid var(--color-linie);
+  }
+  .streifen:first-child { border-left: 0; }
+  .streifen > span { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+  /* Der Streifen der aufgefalteten Seite: Rücken des offenen Blatts, direkt links davon, mit Akzentfläche */
+  .streifen[aria-current="page"] { background: var(--color-akzent-hell); color: var(--color-akzent); box-shadow: inset -3px 0 0 var(--color-akzent); }
+  .streifen:focus-visible { outline-offset: -4px; }
+  .blatt { order: var(--aktiv, 6); flex: 1 1 0; min-width: 0; border-left: 1px solid var(--color-linie); }
+}
 
 /* ── Register der Rechtsgebiete: eine Zeile je Gebiet, Titel links in der Serife ─ */
 .register-zeile {
@@ -214,11 +242,11 @@ img { max-width: 100%; height: auto; }
   border-top: 1px solid var(--color-linie);
 }
 .register-zeile:last-child { border-bottom: 1px solid var(--color-linie); }
-@media (min-width: 40rem) { .register-zeile { grid-template-columns: 12rem minmax(0, 1fr); } }
+@container blatt (min-width: 36rem) { .register-zeile { grid-template-columns: 12rem minmax(0, 1fr); } }
 
 /* ── Kontaktangaben ─────────────────────────────────────────────────── */
 .kontaktzeile { display: grid; gap: 1.25rem 2.5rem; }
-@media (min-width: 40rem) { .kontaktzeile { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@container blatt (min-width: 36rem) { .kontaktzeile { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.35fr); } }
 .kontaktzeile dt, .kontaktblock dt { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--color-tinte-2); margin-bottom: 0.25rem; }
 .kontaktblock { display: grid; gap: 1rem; }
 .kontakt-link { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; font-weight: 600; color: var(--color-tinte); }
@@ -230,26 +258,7 @@ img { max-width: 100%; height: auto; }
 /* ── Figuren ────────────────────────────────────────────────────────── */
 .figur figcaption { font-size: 0.9rem; line-height: 1.45; color: var(--color-grau); margin-top: 0.6rem; }
 
-/* ── Dialog (Menü) ──────────────────────────────────────────────────── */
-dialog.menue {
-  width: 100vw;
-  max-width: 100vw;
-  height: 100dvh;
-  max-height: 100dvh;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: var(--color-papier);
-  color: var(--color-tinte);
-}
-dialog.menue::backdrop { background: color-mix(in srgb, var(--color-tinte) 50%, transparent); }
-@media (min-width: 64rem) {
-  dialog.menue { height: auto; max-height: 100dvh; width: 100vw; border-bottom: 2px solid var(--color-akzent); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  dialog.menue[open] { animation: menue-auf 220ms var(--ease-aus); }
-  @keyframes menue-auf { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
-}
+/* ── Dialoge (Datenschutz-Hinweis) ───────────────────────────────── */
 dialog { border-radius: 0; }
 
 /* ── Formular ───────────────────────────────────────────────────────── */
@@ -322,7 +331,8 @@ details.inhalt-mobil[open] summary::before { transform: rotate(45deg); }
 
 /* ── Druckansicht: nur der Inhalt, keine Navigation, keine Randspalte ─ */
 @media print {
-  .kopf, .fuss, .rand, .kein-druck, dialog, .demo-hinweis { display: none !important; }
+  .kopf, .fuss, .rand, .register, .kein-druck, dialog, .demo-hinweis { display: none !important; }
+  .leporello, .blatt { display: block; }
   body { background: #fff; color: #000; font-size: 11pt; line-height: 1.5; }
   .behaelter { max-width: none; padding: 0; }
   .raster { display: block; }

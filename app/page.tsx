@@ -31,7 +31,7 @@ export default async function Startseite() {
               <SmartLink ziel={s.hero.zweiterKnopf.ziel} className="knopf knopf-sekundaer">{s.hero.zweiterKnopf.text}</SmartLink>
             </div>
           </div>
-          <Figur bild={k.portrait} sizes="(min-width: 64rem) 40vw, 100vw" prio />
+          <Figur bild={k.portrait} sizes="(min-width: 70rem) 34vw, 100vw" prio />
         </div>
       </section>
 

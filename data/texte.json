@@ -2,6 +2,10 @@
   "demoHinweis": "Entwurf: Dies ist eine Verkaufs-Demo und nicht die offizielle Website von Rechtsanwalt Michael Bessler.",
   "navigation": [
     {
+      "text": "Start",
+      "ziel": "/"
+    },
+    {
       "text": "Person",
       "ziel": "/person/"
     },
@@ -24,8 +28,6 @@
   ],
   "kopf": {
     "startLabel": "zur Startseite",
-    "menueKnopf": "Menü",
-    "menueTitel": "Menü",
     "schliessen": "Schliessen",
     "telefonLabel": "Anrufen"
   },
@@ -70,7 +72,7 @@
     "bildnachweisTitel": "Bildnachweis",
     "weiterlesen": "Weiterlesen",
     "nichtGefundenTitel": "Diese Seite gibt es nicht",
-    "nichtGefundenText": "Die Adresse ist falsch geschrieben oder die Seite wurde verschoben. Person, Rechtsgebiete, Coaching, Publikationen und Kontakt finden Sie über das Menü.",
+    "nichtGefundenText": "Die Adresse ist falsch geschrieben oder die Seite wurde verschoben. Person, Rechtsgebiete, Coaching, Publikationen und Kontakt finden Sie über das Register oben oder die Liste unten.",
     "nichtGefundenLink": {
       "text": "Zur Startseite",
       "ziel": "/"

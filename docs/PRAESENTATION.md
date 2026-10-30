@@ -6,7 +6,9 @@ Demo: <https://nick8952.github.io/rechtsanwalt-bessler-demo/> (Entwurf, von Such
 ## In einem Satz
 
 Die Demo zeigt, wie die bestehende Website mit denselben Inhalten heute aussehen kann: ruhig, gut lesbar auf dem Handy, mit den
-Publikationen als richtige Artikel, mit Telefon und E-Mail auf jeder Seite, ohne eine einzige erfundene Angabe.
+Publikationen als richtige Artikel, mit Telefon und E-Mail auf jeder Seite, ohne eine einzige erfundene Angabe. Der Aufbau ist ein
+Faltblatt: Am Bildschirm stehen alle Seiten als beschriftete Streifen nebeneinander, die aufgeschlagene liegt dazwischen; auf dem Handy
+sind es sechs Reiter über dem Inhalt.
 
 ## Was sich der Anwalt ansehen soll (Reihenfolge für das Gespräch)
 

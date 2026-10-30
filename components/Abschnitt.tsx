@@ -8,7 +8,7 @@ export function Abschnitt({ id, rand, children, trenner = true, knapp = false, l
   return (
     <section id={id} className={knapp ? "abschnitt-knapp" : "abschnitt"} aria-labelledby={labelledBy}>
       <div className="behaelter">
-        <div className={`raster ${trenner ? "trenner pt-8 lg:pt-10" : ""}`.trim()}>
+        <div className={`raster ${trenner ? "trenner pt-8 @3xl:pt-10" : ""}`.trim()}>
           <aside className="rand">{rand}</aside>
           <div className="min-w-0">{children}</div>
         </div>

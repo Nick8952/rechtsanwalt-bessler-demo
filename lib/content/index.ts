@@ -47,6 +47,8 @@ export async function invariantenPruefen(q: Inhaltsquelle): Promise<void> {
   for (const l of links) {
     if (l.ziel.startsWith("/") && !seiten.has(l.ziel.split("#")[0])) fehler.push(`Link «${l.text}» zeigt auf eine Seite, die es nicht gibt: ${l.ziel}`);
   }
+  if (t.navigation[0]?.ziel !== "/") fehler.push("Die Navigation (Register des Leporellos) muss mit der Startseite «/» beginnen.");
+  if (new Set(t.navigation.map((n) => n.ziel)).size !== t.navigation.length) fehler.push("Die Navigation (Register) enthält ein Ziel doppelt.");
   for (const p of publikationen) {
     const anker = new Set<string>();
     for (const b of p.bloecke) {

@@ -5,6 +5,7 @@ Migrationsrecht, Coaching). **Nicht die offizielle Website der Kanzlei.** Betrei
 
 - Live (Entwurf, noindex): <https://nick8952.github.io/rechtsanwalt-bessler-demo/>
 - Bisherige Website (Quelle aller Inhalte): <https://www.rechtsanwaltbessler.ch/>
+- Aufbau «Leporello»: alle Seiten als Streifen nebeneinander, die aktuelle aufgefaltet (`docs/DESIGN.md`).
 - Technik: Next.js 16, TypeScript, Tailwind v4, statischer Export; Inhalte in `data/`; Sanity und Vercel vorbereitet, nicht eingerichtet.
 - Anleitungen: `CLAUDE.md` (Architektur und Regeln), `docs/SANITY-VERCEL-EINRICHTUNG.md`, `docs/INHALTE-PFLEGEN.md`, `docs/UEBERGABE.md`.
 - Nachweise: `docs/INHALTSMATRIX.md` (Quellen), `docs/PRUEFBERICHT.md` (Prüfungen, Codex), `SKILL-ANWENDUNG.md`, `docs/PRAESENTATION.md` (Gesprächshilfe).

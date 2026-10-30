@@ -32,6 +32,9 @@ Stand: 30. Oktober 2026. Alle Zahlen stammen aus tatsächlich ausgeführten Läu
 
 ## 3. Browser-Prüfungen (puppeteer-core, Chrome 142, `werkzeuge/qa/`)
 
+Hinweis: Die Abschnitte 3 bis 7 und 12 beschreiben den Stand vor dem Umbau zum Leporello (30. Oktober 2026, nachmittags); die
+Prüfungen des neuen Aufbaus stehen in Abschnitt 13.
+
 Gegen den lokalen Vorschau-Server (`npm run vorschau:pages`, Port 4333) und gegen die Live-Adresse auf GitHub Pages; vor und nach
 dem Fix vom 27.10.2026 (Abschnitt 7).
 
@@ -211,3 +214,32 @@ Schriftwechsel); beides bewusst nicht umgesetzt.
 
 **Lokal auf dem belasteten Rechner (Load über 30):** Audit 360 px bis zur Artikelseite ohne Befund, danach Puppeteer-Abbruch
 (Abschnitt 11); massgebend sind die CI-Läufe und die Live-Läufe oben.
+
+## 13. Aufbau «Leporello» (30. Oktober 2026, nachmittags)
+
+Auf Nicks Wunsch nach einem nie verwendeten Aufbau wurde die Website zum Faltblatt (`docs/DESIGN.md`, Abschnitt «Aufbau Leporello»;
+`docs/ENTSCHEIDUNGEN.md`, Punkt 18). Kopfzeile mit horizontaler Navigation und Menü-Dialog sind entfernt; das Register ist die Navigation.
+
+**Codex-Zweitmeinung zum Leporello** (read-only, 8 Befunde: 1 hoch, 5 mittel, 2 niedrig), alle umgesetzt:
+
+| Nr. | Schwere | Befund | Umsetzung |
+| --- | --- | --- | --- |
+| 1 | hoch | Streifen der aktiven Seite war ausgeblendet: Fokusreihenfolge auf der Startseite ohne «Start», visuelle Sprünge | Streifen der aktiven Seite bleibt als Rücken direkt links vom Blatt sichtbar und fokussierbar; Fokusstrategie (Sprunglink, Kopf, alle Streifen, Blatt) dokumentiert |
+| 2 | mittel | `aria-current` damit nicht im Accessibility-Tree | durch 1 behoben; Prüfung «Landmarke Navigation «Seiten» im Accessibility-Tree» ergänzt |
+| 3 | mittel, unsicher | `display: contents` auf `<nav>` browserabhängig | Landmarke wird per Accessibility-Snapshot geprüft (Chrome); in `docs/DESIGN.md` festgehalten; echte Screenreader-Prüfung offen (Abschnitt 11) |
+| 4 | mittel | Modell erlaubte 1 bis 6 Einträge, Reiter-Hairlines setzten sechs voraus | Hairlines als Schatten je Zelle (zählunabhängig); Modell 2 bis 6 Einträge, Beschriftung ≤ 18 Zeichen; Invarianten: «/» zuerst, keine doppelten Ziele; Tests zählen 2 bis 6 |
+| 5 | mittel | Am 64-rem-Wechsel klappte das Blatt kurz auf eine Spalte zurück | Umschaltpunkt 70 rem (Blatt beim Auffalten ≥ 49 rem), Einstieg zweispaltig erst ab 56 rem Blattbreite; Audit prüft zusätzlich 1119 und 1120 px |
+| 6 | mittel | Tests deckten Start, Kontakt, Druck des Registers und Landmarken nicht ab | Prüfungen für Start (Fokusreihenfolge), Kontakt (Blatt rechts aussen), Impressum (ausserhalb des Registers), Druck (Register aus, Blatt als Block), Landmarke ergänzt |
+| 7 | niedrig | lange Registertitel könnten überlaufen | Modell ≤ 18 Zeichen, Streifen `overflow: hidden` |
+| 8 | niedrig | Texte nannten noch das Menü (404, Studio, Matrix, Prüfbericht, Skills) | 404-Text, Studio-Feldtitel, Inhaltsmatrix, Skill-Bericht angepasst; Prüfbericht mit Hinweis in Abschnitt 3 und diesem Abschnitt |
+
+**Lokale Prüfungen nach dem Umbau** (Chrome for Testing 156.0.8078.47, Load 2 bis 4):
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| `npm run pruefen` | ✓ 484 Texte, 37 Links (neu: «Start» im Register), Kontraste |
+| `npm run build`, `export:pruefen` | ✓ 25 HTML, 568 interne Verweise, JavaScript ≤ 581/625 KB |
+| `npm run seed -- --probe`, Studio | ✓ 17 Dokumente mit Parität; Schema 0 Fehler |
+| Audit (jetzt 6 Breiten: 360, 390, 768, 1119, 1120, 1440) | ✓ **78/78** hell, **78/78** dunkel; Befund «Start»-Link in der Fusszeile 37 px breit → `min-w-11` |
+| Funktionen (jetzt 95) | ✓ **95/95**: Register-Reiter auf 360 px (sechs Reiter ≥ 44 px, aktueller markiert, Reiter navigiert), Leporello-Geometrie bei 1440 (Rücken links vom Blatt, Streifen 56 px breit, bildschirmhoch, klebend nach 1500 px), Start und Kontakt als aktive Seite, Impressum ausserhalb des Registers, Landmarke «Seiten», Fokusreihenfolge, Druckansicht ohne Register |
+| Screenshots | 390, 768, 1120, 1440 px hell und 1440 dunkel gesichtet; behoben: Streifenbeschriftung oben beginnend, E-Mail-Spalte der Kontaktzeile breiter, Einstieg bei 1120 px einspaltig (Titel brach mitten im Wort) |

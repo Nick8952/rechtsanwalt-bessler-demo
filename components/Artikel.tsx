@@ -22,7 +22,7 @@ export function Artikel({ publikation: p, texte: t }: { publikation: Publikation
   const toc = inhaltsverzeichnis(p.bloecke);
   const datum = erschienenText(p.erschienen, p.erschienenText);
   return (
-    <article className="behaelter pb-16 pt-10 lg:pb-24 lg:pt-14">
+    <article className="behaelter pb-16 pt-10 @3xl:pb-24 @3xl:pt-14">
       <div className="raster">
         <aside className="rand">
           <div className="rand-kleb grid gap-6">

@@ -263,7 +263,7 @@ export const texte = defineType({
   fields: [
     defineField({ name: "demoHinweis", title: "Hinweis «Entwurf»", type: "string", description: "Schmale Zeile über der Kopfzeile. Sie erscheint nur, solange die Website nicht für Suchmaschinen freigegeben ist.", group: "navigation" }),
     defineField({ name: "navigation", title: "Seiten in der Navigation", type: "array", of: [defineArrayMember({ type: "verweis" })], group: "navigation", validation: (r) => r.required().min(1).max(6) }),
-    defineField({ name: "kopf", title: "Kopfzeile", type: "object", group: "navigation", validation: (r) => r.required(), fields: [text("startLabel", "Zusatz zur Wortmarke, nur für Screenreader (zum Beispiel «zur Startseite»)"), text("menueKnopf", "Knopf «Menü»"), text("menueTitel", "Titel des Menüs"), text("schliessen", "Knopf «Schliessen»"), text("telefonLabel", "Beschriftung des Telefon-Links (für Screenreader)")] }),
+    defineField({ name: "kopf", title: "Kopf (Wortmarke, Telefon) und Knopf «Schliessen» des Datenschutz-Hinweises", type: "object", group: "navigation", validation: (r) => r.required(), fields: [text("startLabel", "Zusatz zur Wortmarke, nur für Screenreader (zum Beispiel «zur Startseite»)"), text("schliessen", "Knopf «Schliessen»"), text("telefonLabel", "Beschriftung des Telefon-Links (für Screenreader)")] }),
     defineField({
       name: "footer", title: "Fusszeile", type: "object", group: "fuss", validation: (r) => r.required(),
       fields: [

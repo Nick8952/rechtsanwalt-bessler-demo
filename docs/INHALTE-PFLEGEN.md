@@ -26,7 +26,7 @@ Heute: `data/kanzlei.json`. Später: Sanity Studio → **Kanzlei und Kontaktanga
 | Eigene Website zum Coaching | optional | https://www.michaelbessler.ch |
 | Portrait, Vorschaubild | mit Bildbeschreibung und Bildnachweis | |
 
-Telefon und E-Mail erscheinen automatisch in Kopfzeile, Fusszeile, auf der Startseite und auf der Kontaktseite. Es gibt nur diese eine
+Telefon und E-Mail erscheinen automatisch im Kopf, in der Fusszeile, auf der Startseite und auf der Kontaktseite. Es gibt nur diese eine
 Stelle dafür; die Prüfung meldet abweichende Nummern oder Adressen in freien Texten.
 
 ## Seitentexte
@@ -42,7 +42,7 @@ Stelle dafür; die Prüfung meldet abweichende Nummern oder Adressen in freien T
 | Links (Gruppen, Einträge, erreichbar ja/nein) | `data/seiten/links.json` | Weiterführende Links |
 | Kontakt (Lage, Tram, Hinweis zur Mandatsannahme) | `data/seiten/kontakt.json` | Seiten → Kontakt und Anfahrt |
 | Impressum, Datenschutzerklärung | `data/seiten/impressum.json`, `datenschutz.json` | Seiten → Impressum / Datenschutzerklärung |
-| Navigation, Fusszeile, Formular, Datenschutz-Einstellungen | `data/texte.json` | Navigation, Fusszeile und Formulartexte |
+| Navigation (= Register des Leporellos: höchstens sechs Einträge, Reihenfolge = Reihenfolge der Streifen, «Start» zuerst), Fusszeile, Formular, Datenschutz-Einstellungen | `data/texte.json` | Navigation, Fusszeile und Formulartexte |
 
 Ein neues Rechtsgebiet ist nur mit einer Quelle der Art «Eigene Angabe des Anwalts» möglich (sonst bricht die Prüfung ab). Der Einstieg
 der Startseite ist auf zwei Zeilen Titel und 20 Wörter Text begrenzt.

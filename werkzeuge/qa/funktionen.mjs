@@ -1,6 +1,6 @@
 // Funktionsprüfungen im echten Browser (puppeteer-core). Vorschau-Server nötig: npm run vorschau:pages
 // Geprüft wird, was ein Mensch bedienen würde: Erstbesuch ohne Dienste Dritter, Kontaktwege (tel:, mailto:, Karte extern),
-// Tastatur, Menü (Dialog), Publikationen (Inhaltsverzeichnis, Sprungmarken, Lesemass, Druckansicht), mailto-Formular (ohne je
+// Tastatur, Register (Leporello), Publikationen (Inhaltsverzeichnis, Sprungmarken, Lesemass, Druckansicht), mailto-Formular (ohne je
 // etwas zu versenden), Weiterleitungen alter Adressen, Fehlerseite, Direktaufrufe, reduzierte Bewegung, dunkles Farbschema.
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { BASE, alleSeiten, browserStarten, externeAnfragen, publikationen, warten } from "./chrome.mjs";
@@ -98,34 +98,41 @@ await gruppe(async () => {
   const reihenfolge = [];
   await page.goto(BASE + "/", { waitUntil: "networkidle0" });
   for (let i = 0; i < 8; i++) { await page.keyboard.press("Tab"); reihenfolge.push(await page.evaluate(() => (document.activeElement.getAttribute("aria-label") || document.activeElement.textContent || "").trim().replace(/\s+/g, " ").slice(0, 60))); }
-  ok("Tastatur: Fokusreihenfolge folgt dem Aufbau (Sprunglink, Wortmarke, Navigation, Telefon)", /^Zum Inhalt/.test(reihenfolge[0]) && /Startseite/.test(reihenfolge[1]) && reihenfolge[2] === "Person" && reihenfolge[3] === "Rechtsgebiete" && reihenfolge[4] === "Coaching" && reihenfolge[5] === "Publikationen" && reihenfolge[6] === "Kontakt" && /^Anrufen/.test(reihenfolge[7]), reihenfolge.join(" → "));
+  ok("Tastatur: Fokusreihenfolge folgt dem Aufbau (Sprunglink, Wortmarke, Telefon, Register: Start, Person, Rechtsgebiete …)", /^Zum Inhalt/.test(reihenfolge[0]) && /Startseite/.test(reihenfolge[1]) && /Anrufen/.test(reihenfolge[2]) && reihenfolge[3] === "Start" && reihenfolge[4] === "Person" && reihenfolge[5] === "Rechtsgebiete" && reihenfolge[6] === "Coaching", reihenfolge.join(" → "));
   await page.goto(BASE + "/person/", { waitUntil: "networkidle0" });
-  ok("Navigation: aria-current auf «Person»", await page.evaluate(() => document.querySelector('header a[aria-current="page"]')?.textContent?.trim() === "Person"));
+  ok("Register: aria-current auf «Person»", await page.evaluate(() => document.querySelector('nav.register a[aria-current="page"]')?.textContent?.trim() === "Person"));
+  ok("Leporello: Blatt «Person» liegt rechts neben seinem Rücken, links davon «Start», rechts die vier übrigen Streifen; Streifen 56 px breit, bildschirmhoch und klebend", await page.evaluate(() => {
+    const streifen = [...document.querySelectorAll("nav.register a.streifen")].filter((a) => getComputedStyle(a).display !== "none");
+    const blatt = document.querySelector(".blatt").getBoundingClientRect();
+    const links = streifen.filter((a) => a.getBoundingClientRect().right <= blatt.left + 1).map((a) => a.textContent.trim());
+    const rechts = streifen.filter((a) => a.getBoundingClientRect().left >= blatt.right - 1).map((a) => a.textContent.trim());
+    const masse = streifen.every((a) => { const r = a.getBoundingClientRect(); return r.width >= 44 && r.height >= innerHeight - 1 && getComputedStyle(a).position === "sticky"; });
+    const ruecken = streifen.find((a) => a.getAttribute("aria-current") === "page");
+    return links.join(",") === "Start,Person" && rechts.join(",") === "Rechtsgebiete,Coaching,Publikationen,Kontakt" && masse && blatt.width > innerWidth / 2 && ruecken?.textContent.trim() === "Person" && Math.abs(ruecken.getBoundingClientRect().right - blatt.left) <= 1;
+  }));
   await page.goto(BASE + "/publikationen/" + publikationen()[0] + "/", { waitUntil: "networkidle0" });
-  ok("Navigation: Artikelseite markiert «Publikationen» als aktuell", await page.evaluate(() => document.querySelector('header a[aria-current="page"]')?.textContent?.trim() === "Publikationen"));
+  ok("Register: Artikelseite markiert «Publikationen» als aktuell", await page.evaluate(() => document.querySelector('nav.register a[aria-current="page"]')?.textContent?.trim() === "Publikationen"));
+  await page.evaluate(() => window.scrollTo(0, 1500)); await warten(300);
+  ok("Leporello: Streifen bleiben beim Lesen sichtbar (nach 1500 px Scrollen am oberen Rand)", await page.evaluate(() => [...document.querySelectorAll("nav.register a.streifen")].filter((a) => getComputedStyle(a).display !== "none").every((a) => Math.abs(a.getBoundingClientRect().top) < 1)));
+  await page.goto(BASE + "/impressum/", { waitUntil: "networkidle0" });
+  ok("Leporello: Seite ausserhalb des Registers (Impressum) liegt rechts von allen sechs Streifen", await page.evaluate(() => { const blatt = document.querySelector(".blatt").getBoundingClientRect(); const s = [...document.querySelectorAll("nav.register a.streifen")]; return s.length >= 2 && s.length <= 6 && s.every((a) => a.getBoundingClientRect().right <= blatt.left + 1) && !document.querySelector('nav.register a[aria-current]'); }));
+  await page.goto(BASE + "/kontakt/", { waitUntil: "networkidle0" });
+  ok("Leporello: letzte Seite (Kontakt) liegt rechts von allen anderen Streifen, ihr Rücken direkt links vom Blatt", await page.evaluate(() => { const blatt = document.querySelector(".blatt").getBoundingClientRect(); const s = [...document.querySelectorAll("nav.register a.streifen")]; const r = s.find((a) => a.getAttribute("aria-current") === "page"); return s.every((a) => a.getBoundingClientRect().right <= blatt.left + 1) && r?.textContent.trim() === "Kontakt" && Math.abs(r.getBoundingClientRect().right - blatt.left) <= 1; }));
+  const baum = await page.accessibility.snapshot();
+  const landmarke = (k) => k && ((k.role === "navigation" && k.name === "Seiten") || (k.children ?? []).some(landmarke));
+  ok("Leporello: Register ist als Navigation «Seiten» im Accessibility-Tree (trotz display: contents)", landmarke(baum));
   await ctx.close();
 });
 
-// 4) Handy (360 px): Menü als Dialog, Touch-Ziele, kein horizontales Scrollen, Einstieg im ersten Bildschirm
+// 4) Handy (360 px): Register als Reiter, Touch-Ziele, kein horizontales Scrollen, Einstieg im ersten Bildschirm
 await gruppe(async () => {
   const { ctx, page } = await frisch({ breite: 360, hoehe: 740 });
   await page.goto(BASE + "/rechtsgebiete/", { waitUntil: "networkidle0" });
-  const knopf = await page.$('header button[aria-haspopup="dialog"]');
-  const box = await knopf.boundingBox();
-  ok("Mobil: Menüknopf ≥ 44 × 44 px, beschriftet «Menü»", box.height >= 44 && box.width >= 44 && (await page.evaluate((b) => b.textContent.trim(), knopf)) === "Menü", `${Math.round(box.width)}×${Math.round(box.height)}`);
   ok("Mobil: Telefon im Kopf als Symbol-Link ≥ 44 px mit Beschriftung für Screenreader", await page.evaluate((tel) => { const a = document.querySelector(`header a[href="${tel}"]`); const r = a.getBoundingClientRect(); return r.width >= 44 && r.height >= 44 && /Anrufen/.test(a.getAttribute("aria-label") || ""); }, TEL));
-  await knopf.click(); await warten(400);
-  ok("Mobil: Menü füllt den Bildschirm, 7 Seitenlinks, Telefon und E-Mail vorhanden, Fokus im Dialog", await page.evaluate((tel, mail) => { const d = document.querySelector("dialog.menue[open]"); const r = d.getBoundingClientRect(); return r.width >= innerWidth - 1 && r.height >= innerHeight - 1 && d.querySelectorAll("nav a").length === 7 && !!d.querySelector(`a[href="${tel}"]`) && !!d.querySelector(`a[href="mailto:${mail}"]`) && d.contains(document.activeElement); }, TEL, EMAIL));
-  const kleine = await page.evaluate(() => [...document.querySelectorAll("dialog.menue[open] nav a, dialog.menue[open] button, dialog.menue[open] a")].filter((e) => e.getBoundingClientRect().height > 0 && e.getBoundingClientRect().height < 44).length);
-  ok("Mobil: alle Menüziele ≥ 44 px hoch", kleine === 0, `${kleine} zu klein`);
-  let draussen = 0;
-  for (let i = 0; i < 30; i++) { await page.keyboard.press("Tab"); if (!(await page.evaluate(() => document.querySelector("dialog.menue[open]").contains(document.activeElement) || document.activeElement === document.body))) draussen++; }
-  ok("Mobil: Fokus bleibt im Menü (30-mal Tab)", draussen === 0, `${draussen} ausserhalb`);
-  await page.keyboard.press("Escape"); await warten(250);
-  ok("Mobil: Escape schliesst das Menü, Fokus zurück auf dem Knopf", await page.evaluate(() => !document.querySelector("dialog[open]") && document.activeElement?.getAttribute("aria-haspopup") === "dialog" && document.activeElement.getAttribute("aria-expanded") === "false"));
-  await knopf.click(); await warten(300);
-  await page.evaluate(() => document.querySelector('dialog.menue[open] nav a[href$="/kontakt/"]').click()); await warten(900);
-  ok("Mobil: Menülink navigiert und schliesst das Menü", page.url().endsWith("/kontakt/") && !(await page.$("dialog[open]")), page.url().replace(BASE, ""));
+  ok("Mobil: Register mit sechs Reitern über dem Inhalt, alle sichtbar und ≥ 44 px hoch, kein Dialog", await page.evaluate(() => { const r = [...document.querySelectorAll("nav.register a.streifen")]; const blatt = document.querySelector(".blatt").getBoundingClientRect(); return r.length >= 2 && r.length <= 6 && r.every((a) => { const b = a.getBoundingClientRect(); return b.height >= 44 && b.width >= 44 && b.bottom <= blatt.top + 1; }) && !document.querySelector("dialog.menue"); }));
+  ok("Mobil: aktueller Reiter «Rechtsgebiete» markiert (aria-current, Akzent)", await page.evaluate(() => { const a = document.querySelector('nav.register a[aria-current="page"]'); return a?.textContent.trim() === "Rechtsgebiete" && getComputedStyle(a).backgroundColor !== getComputedStyle(document.body).backgroundColor; }));
+  await page.evaluate(() => document.querySelector('nav.register a[href$="/kontakt/"]').click()); await warten(900);
+  ok("Mobil: Reiter navigiert zur Seite", page.url().endsWith("/kontakt/") && (await page.evaluate(() => document.querySelector('nav.register a[aria-current="page"]')?.textContent.trim())) === "Kontakt", page.url().replace(BASE, ""));
   for (const s of alleSeiten()) {
     await page.goto(BASE + s, { waitUntil: "networkidle0" });
     ok(`Mobil ${s}: kein horizontales Scrollen`, await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1));
@@ -161,8 +168,8 @@ await gruppe(async () => {
   ok("Artikel: «Nach oben», Rückweg zur Übersicht und Hinweis auf die Quelle vorhanden", await page.evaluate(() => !!document.querySelector('main a[href="#artikel"]') && !!document.querySelector('main a[href$="/publikationen/"]') && !!document.querySelector('main a[href^="https://www.rechtsanwaltbessler.ch/"]')));
   await page.emulateMediaFeatures([]);
   await page.emulateMediaType("print"); await warten(200);
-  const druck = await page.evaluate(() => ({ kopf: getComputedStyle(document.querySelector("header.kopf")).display, fuss: getComputedStyle(document.querySelector("footer")).display, rand: getComputedStyle(document.querySelector("aside.rand")).display, text: getComputedStyle(document.querySelector(".artikel p")).fontSize }));
-  ok("Artikel: Druckansicht blendet Kopfzeile, Fusszeile und Randspalte aus", druck.kopf === "none" && druck.fuss === "none" && druck.rand === "none", JSON.stringify(druck));
+  const druck = await page.evaluate(() => ({ kopf: getComputedStyle(document.querySelector("header.kopf")).display, fuss: getComputedStyle(document.querySelector("footer")).display, rand: getComputedStyle(document.querySelector("aside.rand")).display, register: getComputedStyle(document.querySelector("nav.register")).display, blatt: getComputedStyle(document.querySelector(".blatt")).display, text: getComputedStyle(document.querySelector(".artikel p")).fontSize }));
+  ok("Artikel: Druckansicht blendet Kopf, Register, Fusszeile und Randspalte aus; Blatt als Block", druck.kopf === "none" && druck.fuss === "none" && druck.rand === "none" && druck.register === "none" && druck.blatt === "block", JSON.stringify(druck));
   await page.emulateMediaType(null);
   await page.setViewport({ width: 390, height: 844 });
   await page.goto(BASE + `/publikationen/${slug}/`, { waitUntil: "networkidle0" });

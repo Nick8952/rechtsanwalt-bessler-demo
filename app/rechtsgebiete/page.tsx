@@ -29,7 +29,7 @@ export default async function RechtsgebieteSeite() {
         }
       >
         <Rechtsgebieteliste rechtsgebiete={rechtsgebiete} ueberschriftStufe={2} />
-        <div className="mt-12 grid items-start gap-8 md:grid-cols-2">
+        <div className="mt-12 grid items-start gap-8 @2xl:grid-cols-2">
           <div>
             <h2 className="titel-3">{s.kontaktTitel}</h2>
             <p className="lauftext mt-3 text-tinte-2">{s.kontaktText}</p>

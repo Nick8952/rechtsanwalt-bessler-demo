@@ -107,8 +107,9 @@ export type PublikationArt = (typeof PUBLIKATION_ARTEN)[number];
 
 export const texteSchema = z.strictObject({
   demoHinweis: z.string(),
-  navigation: z.array(linkSchema).min(1).max(6),
-  kopf: z.strictObject({ startLabel: z.string(), menueKnopf: z.string(), menueTitel: z.string(), schliessen: z.string(), telefonLabel: z.string() }),
+  /** Register des Leporellos: 2 bis 6 Einträge, «Start» («/») zuerst (Invariante in lib/content/index.ts); Beschriftung passt senkrecht in einen Streifen */
+  navigation: z.array(linkSchema.extend({ text: z.string().min(1).max(18, "Registerbeschriftung höchstens 18 Zeichen (passt senkrecht in den Streifen).") })).min(2).max(6),
+  kopf: z.strictObject({ startLabel: z.string(), schliessen: z.string(), telefonLabel: z.string() }),
   footer: z.strictObject({
     leitsatz: z.string(), kontaktTitel: z.string(), seitenTitel: z.string(), rechtlichesTitel: z.string(),
     weitere: z.array(linkSchema), rechtliches: z.array(linkSchema).min(1), route: z.string(), bildnachweis: linkSchema, copyright: z.string(), demoHinweis: z.string(),

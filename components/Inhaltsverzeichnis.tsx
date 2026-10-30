@@ -39,11 +39,11 @@ export function Inhaltsverzeichnis({ eintraege, titel }: { eintraege: Eintrag[];
 
   return (
     <>
-      <details className="inhalt-mobil border-y border-linie py-1 lg:hidden">
+      <details className="inhalt-mobil border-y border-linie py-1 @3xl:hidden">
         <summary>{titel}</summary>
         <nav aria-label={titel} className="mb-2 mt-1">{liste}</nav>
       </details>
-      <nav aria-label={titel} className="hidden lg:block">
+      <nav aria-label={titel} className="hidden @3xl:block">
         <p className="titel-4">{titel}</p>
         <div className="inhalt-scroll mt-2">{liste}</div>
       </nav>

@@ -18,9 +18,9 @@ Keine Serverfunktionen, keine API-Routen, kein eingebettetes Studio, keine Anfra
 app/                 layout.tsx (Kopf, Fuss, Einwilligung, Schriften via next/font/local, JSON-LD nur bei Freigabe), page.tsx (Start),
                      person/, rechtsgebiete/, coaching/, publikationen/ + publikationen/[slug]/ (generateStaticParams, dynamicParams = false),
                      kontakt/, links/, impressum/, datenschutz/, not-found.tsx, robots.ts, sitemap.ts, icon.svg/png, apple-icon.png, globals.css
-components/          Kopfzeile, Menue (Dialog), Fusszeile, Wortmarke, Abschnitt + Randnotiz (Randspalte), Kontaktdaten, Rechtsgebieteliste,
+components/          Kopf (Wortmarke, Telefon), Leporello (Register + Blatt), Fusszeile, Wortmarke, Abschnitt + Randnotiz (Randspalte), Kontaktdaten, Rechtsgebieteliste,
                      Publikationsliste, Artikel + Inhaltsverzeichnis + Druckknopf, RichText, Seitenkopf, RechtSeite, Anfrageformular (mailto),
-                     Einwilligung (ruhend), Bild + Figur, SmartLink, NavLink
+                     Einwilligung (ruhend), Bild + Figur, SmartLink
 lib/content/         modell.ts (EIN Domainmodell als zod-Schemas), pfade.ts (ohne zod, für Client-Komponenten), local.ts (JSON),
                      sanity.ts (GROQ + Portable Text, nur bei CONTENT_SOURCE=sanity geladen), text.ts (Auszeichnung, Sprungmarken),
                      freigabe.ts (bricht den Build bei INDEXIERUNG=1 ohne Freigaben ab), index.ts (Quelle, Invarianten)
@@ -97,7 +97,7 @@ die Browser-Prüfungen und die Studio-Prüfung, und veröffentlicht `out/` auf G
 
 ### Kontakt, Formular, Karte
 
-- Telefon und E-Mail sind auf jeder Seite erreichbar (Kopfzeile, Fusszeile). Das Formular bereitet nur eine E-Mail vor (`mailto:`):
+- Telefon und E-Mail sind auf jeder Seite erreichbar (Kopf, Fusszeile). Das Formular bereitet nur eine E-Mail vor (`mailto:`):
   Knopf «E-Mail vorbereiten», Hinweis statt Versandbestätigung, Hinweis «kein Mandat», keine Uploads, keine Speicherung. Felder: Name,
   E-Mail, Telefon (freiwillig), Betreff, Nachricht. Tests nur mit fiktiven Daten; während der Entwicklung werden **keine** Nachrichten an
   die Kanzlei gesendet.
@@ -138,6 +138,12 @@ die Browser-Prüfungen und die Studio-Prüfung, und veröffentlicht `out/` auf G
 ### Gestaltung «Randnotiz»
 
 - Eigenständiges Design, kein Reskin früherer Demos. Tokens, Schrift, Bewegung, Begründungen: `docs/DESIGN.md`.
+- Aufbau «Leporello» (seit 30.10.2026, Nicks Wunsch): Die Seiten stehen ab 70 rem als senkrecht beschriftete Streifen nebeneinander,
+  die aktuelle ist aufgefaltet (ihr Streifen bleibt als Rücken links vom Blatt, `aria-current`) (`components/Leporello.tsx`, CSS-Abschnitt «Leporello»). Das Register ist `texte.navigation` (2 bis 6 Einträge, Beschriftung
+  höchstens 18 Zeichen, Reihenfolge = Streifen, «Start» zuerst: Invariante in `lib/content/index.ts`). Unter 70 rem Reiter über dem Inhalt; kein Dialogmenü, kein fixierter Kopf. Das Blatt ist der
+  Container `blatt`: Spaltenlayouts im Blatt nur über Container-Queries (`@container blatt` in CSS, `@xl:`/`@2xl:`/`@3xl:` in Komponenten),
+  nie über die Fensterbreite (Umschaltpunkt 70 rem, damit das Blatt beim Auffalten ≥ 49 rem breit ist). Fokusreihenfolge bewusst:
+  Sprunglink, Kopf, alle Streifen, dann das Blatt. Ein weiterer Streifen braucht nur einen Navigationseintrag (bis sechs).
 - Ein Akzent (tiefes Grün), warmes Papier, warme Tinte; dunkles Theme über dieselben Tokens. Radius 0 überall. Zwei Schriften mit festen
   Rollen: Newsreader (Titel, Randnotizen, Zitate), Hanken Grotesk (Navigation, Lauftext, Bedienung). Icons nur aus `@phosphor-icons/react`.
 - Die Randspalte (`components/Abschnitt.tsx`, `.raster`) trägt nur Wahres (Angaben, Inhaltsverzeichnis, Bildlegende), nie Dekoration.

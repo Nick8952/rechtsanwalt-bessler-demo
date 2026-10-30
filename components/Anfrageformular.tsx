@@ -92,7 +92,7 @@ export function Anfrageformular({ texte: f, empfaenger }: { texte: Texte["formul
           </p>
         </noscript>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-5 @xl:grid-cols-2">
         <div className="feld">
           <label htmlFor={`${id}-name`}>{f.name} <span aria-hidden="true">*</span></label>
           <input id={`${id}-name`} name="Name" type="text" autoComplete="name" maxLength={GRENZEN.name} required aria-required="true" aria-invalid={fehler.name ? "true" : undefined} aria-describedby={fehler.name ? `${id}-name-fehler` : undefined} value={name} onChange={(ev) => setName(ev.target.value)} />

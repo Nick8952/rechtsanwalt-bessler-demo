@@ -5,7 +5,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { BASE, alleSeiten, browserStarten, externeAnfragen, warten } from "./chrome.mjs";
 const seiten = process.env.SEITEN ? process.env.SEITEN.split(",") : [...alleSeiten(), "/diese-seite-gibt-es-nicht/"];
-const breiten = (process.env.BREITEN ?? "360,390,768,1440").split(",").map(Number);
+// 1119/1120 px: knapp unter und auf dem Umschaltpunkt des Leporellos (70 rem)
+const breiten = (process.env.BREITEN ?? "360,390,768,1119,1120,1440").split(",").map(Number);
 const screenshots = process.env.SCREENSHOTS === "1";
 mkdirSync("pruefung/shots", { recursive: true });
 let browser = await browserStarten();

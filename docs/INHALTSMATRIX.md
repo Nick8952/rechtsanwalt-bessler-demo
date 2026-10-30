@@ -19,7 +19,7 @@ Kodierung Windows-1252 neu gelesen, weil die Anführungszeichen («„», «“�
 | `_der_mann_ohne_eigenschaften-1.html` | Seminararbeit März 1999 «Über den Roman: Der Mann ohne Eigenschaften von Robert Musil», 16'003 Wörter, 38 Zwischentitel, 116 Zitate, Literaturverzeichnis | `/publikationen/der-mann-ohne-eigenschaften/` | wörtlich (0 Wortabweichungen); Zitate (im Original kursiv) als Blockzitate; Nummerierung der Quelle beibehalten (zweimal «IV.», «D.» gefolgt von «F.») | Nutzungsrechte; Korrekturvorschläge (Abschnitt 4) |
 | `_der_mann_ohne_eigenschaften.html` | Thesen zum Roman, 251 Wörter, zwei Listen | `/publikationen/thesen-der-mann-ohne-eigenschaften/` | wörtlich (0 Wortabweichungen); ohne Datum (die Quelle nennt keines) | Nutzungsrechte; Datum, falls bekannt |
 | `sitemap.xml` | Liste der neun Seiten | entfällt; neue Sitemap entsteht erst bei Freigabe (`INDEXIERUNG=1`) | | |
-| Navigation («Einleitung, Home, Persönlich, Rechtsgebiete, Coaching, Konktakt, Links, Texte») | | «Person, Rechtsgebiete, Coaching, Publikationen, Kontakt» + Startseite über die Wortmarke; «Links» in der Fusszeile und auf der Rechtsgebieteseite | «Einleitung» und «Home» zu einer Startseite zusammengeführt | |
+| Navigation («Einleitung, Home, Persönlich, Rechtsgebiete, Coaching, Konktakt, Links, Texte») | | Register «Start, Person, Rechtsgebiete, Coaching, Publikationen, Kontakt» (Leporello, seit 30.10.2026) + Startseite über die Wortmarke; «Links» in der Fusszeile und auf der Rechtsgebieteseite | «Einleitung» und «Home» zu einer Startseite zusammengeführt | |
 
 ## 2. Kanzlei- und Kontaktdaten
 

@@ -20,7 +20,7 @@ export default async function PersonSeite() {
       <Seitenkopf titel={p.titel} einleitung={p.einleitung} />
       <Abschnitt trenner={false} rand={<Randnotiz text={p.randnotiz} />}>
         <Figur bild={k.portrait} sizes="(min-width: 64rem) 652px, 100vw" legende={p.bildLegende} prio />
-        <div className="mt-10 grid gap-10 sm:grid-cols-2">
+        <div className="mt-10 grid gap-10 @xl:grid-cols-2">
           {p.gruppen.map((g) => (
             <section key={g.kennung} aria-labelledby={`gruppe-${g.kennung}`}>
               <h2 id={`gruppe-${g.kennung}`} className="titel-3">{g.titel}</h2>

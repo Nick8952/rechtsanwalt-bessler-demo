@@ -4,7 +4,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { Einwilligung } from "@/components/Einwilligung";
 import { Fusszeile } from "@/components/Fusszeile";
-import { Kopfzeile } from "@/components/Kopfzeile";
+import { Kopf } from "@/components/Kopf";
+import { Leporello } from "@/components/Leporello";
 import { inhaltsquelle, pfade } from "@/lib/content";
 import { siteUrl } from "@/lib/deploy-ziel";
 import { indexierungErlaubt, jsonLdSicher, kanzleiJsonLd } from "@/lib/seo";
@@ -54,11 +55,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           {t.ui.zumInhalt}
         </a>
         {!indexierungErlaubt && t.demoHinweis ? <p className="demo-hinweis klein border-b border-linie bg-flaeche-2 px-4 py-1.5 text-center text-tinte-2">{t.demoHinweis}</p> : null}
-        <Kopfzeile kanzlei={k} texte={t} />
-        <main id="inhalt" tabIndex={-1} className="w-full max-w-full overflow-x-hidden outline-none">
-          {children}
-        </main>
-        <Fusszeile kanzlei={k} texte={t} zeigeDemoHinweis={!indexierungErlaubt} />
+        <Kopf kanzlei={k} texte={t} />
+        <Leporello navigation={t.navigation} label={t.footer.seitenTitel}>
+          <main id="inhalt" tabIndex={-1} className="w-full max-w-full overflow-x-hidden outline-none">
+            {children}
+          </main>
+          <Fusszeile kanzlei={k} texte={t} zeigeDemoHinweis={!indexierungErlaubt} />
+        </Leporello>
         <Einwilligung texte={t.einwilligung} datenschutzPfad={pfade.datenschutz} schliessen={t.kopf.schliessen} />
         {indexierungErlaubt ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdSicher(kanzleiJsonLd(k, rechtsgebiete)) }} /> : null}
       </body>

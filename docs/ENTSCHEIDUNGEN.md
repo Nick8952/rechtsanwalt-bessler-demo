@@ -36,3 +36,9 @@ Kurz begründete Festlegungen dieser Demo (Stand 27. Oktober 2026). Was sich aus
 16. **Jeder Build prüft** (auch Vercel): Inhalte vor `next build`, Export danach. Codex-Befund 3 der Architekturprüfung.
 17. **Linkziele streng:** interne Ziele dürfen nicht mit «/\» beginnen, URL-Felder sind echte https-Adressen ohne Benutzerangaben
     (Codex-Befunde 4 und 8); Sanity-Listen mit doppelten Slugs brechen den Build ab (Befund 6).
+18. **Aufbau «Leporello» (30.10.2026).** Nick wollte einen Aufbau, der in keiner früheren Demo vorkam. Die Website ist jetzt ein Faltblatt:
+    alle sechs Seiten als senkrecht beschriftete Streifen nebeneinander, die aktuelle aufgefaltet an ihrer Stelle; unter 70 rem sechs Reiter
+    über dem Inhalt statt eines Dialogmenüs. Kopf nicht fixiert, Navigation = Register, der Streifen der aktuellen Seite bleibt als
+    Rücken sichtbar (Codex-Befund: Fokusreihenfolge und `aria-current`). Preis: Das Blatt ist schmaler als das Fenster (Spaltenlayouts
+    hängen deshalb an Container-Queries; Umschaltpunkt 70 rem, damit nichts zurückklappt), und `display: contents` auf dem `<nav>` setzt
+    aktuelle Browser voraus (Landmarke wird im Accessibility-Tree geprüft). Verworfen: Buchaufschlag, Daumenregister, Zeitungsseite, Brief (`docs/DESIGN.md`).
