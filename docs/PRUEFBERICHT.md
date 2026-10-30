@@ -243,3 +243,18 @@ Auf Nicks Wunsch nach einem nie verwendeten Aufbau wurde die Website zum Faltbla
 | Audit (jetzt 6 Breiten: 360, 390, 768, 1119, 1120, 1440) | ✓ **78/78** hell, **78/78** dunkel; Befund «Start»-Link in der Fusszeile 37 px breit → `min-w-11` |
 | Funktionen (jetzt 95) | ✓ **95/95**: Register-Reiter auf 360 px (sechs Reiter ≥ 44 px, aktueller markiert, Reiter navigiert), Leporello-Geometrie bei 1440 (Rücken links vom Blatt, Streifen 56 px breit, bildschirmhoch, klebend nach 1500 px), Start und Kontakt als aktive Seite, Impressum ausserhalb des Registers, Landmarke «Seiten», Fokusreihenfolge, Druckansicht ohne Register |
 | Screenshots | 390, 768, 1120, 1440 px hell und 1440 dunkel gesichtet; behoben: Streifenbeschriftung oben beginnend, E-Mail-Spalte der Kontaktzeile breiter, Einstieg bei 1120 px einspaltig (Titel brach mitten im Wort) |
+
+**CI (GitHub Actions, Lauf für Commit 5d8d58a, grün):** Prüfungen, Trockenlauf, Build, Export-Prüfung, Audit **78/78**, Funktionen **95/95**
+(Chrome des Runners, keine Wiederholung nötig), Studio, Deploy.
+
+**Live nach dem Deploy (30.10.2026, 14:23 bis 14:33, Load 2 bis 3):** Funktionen **95/95**, Audit **78/78** hell und **78/78** dunkel. Lighthouse:
+
+| Seite | Desktop (Leistung / Barrierefreiheit / Best Practices / SEO) | Mobil | LCP mobil |
+| --- | --- | --- | --- |
+| `/` | 100 / 100 / 100 / 66 | **100** / 100 / 100 / 66 | 0.9 s |
+| `/rechtsgebiete/` | 100 / 100 / 100 / 66 | 100 / 100 / 100 / 66 | 0.9 s |
+| `/publikationen/der-mann-ohne-eigenschaften/` | 100 / 100 / 100 / 63 | 100 / 100 / 100 / 63 | 1.5 s |
+| `/kontakt/` | 100 / 100 / 100 / 63 | 100 / 100 / 100 / 63 | 0.9 s |
+
+Der mobile LCP der Startseite fiel von 3.0 s auf 0.9 s: Mit dem Register über dem Inhalt ist auf dem Handy der Titel das grösste
+Element im ersten Bildschirm, nicht mehr das Portrait. Einziger nicht bestandener Punkt bleibt `is-crawlable` (gewollt, `noindex`).
