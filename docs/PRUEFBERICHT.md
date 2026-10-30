@@ -193,11 +193,21 @@ anwaltliche Prüfung erstellt und vom Anwalt freizugeben (`docs/UEBERGABE.md`, F
 Wortmarke, präzisierter Impressumssatz, Sprungmarken aus `kennung` auf der Linkseite, Weiterleitung `/konktakt.html` → `/kontakt/`,
 404 für unbekannte Adressen, `robots.txt` ohne Sperre, keine `sitemap.xml`, 40 Zwischentitel mit `id` im Artikel.
 
-**Live-Lighthouse nach dem ersten Fix (30.10.2026, 11:42, Commit 4be9f3d):** Desktop auf allen vier Seiten 100 / 100 / 100 (SEO 63 bis 66
-wegen `noindex`), Mobil Startseite **95** (LCP 3.0 s), Rechtsgebiete 100 (0.9 s), Artikel 100 (1.5 s), Kontakt 100 (0.9 s);
-`label-content-name-mismatch` behoben. Die Codex-Umsetzung änderte am Ladeverhalten nichts (nur CSS-Regel für reduzierte Bewegung,
-Linkklassen, Texte); eine erneute Live-Messung nach Commit dcaa33d war am 30.10.2026 wegen hoher Systemlast auf dem Prüfrechner
-(Abschnitt 11) nicht verlässlich möglich und steht aus.
+**Live nach dem letzten Deploy (30.10.2026, 13:37 bis 13:52, Commit 251993c, Chrome for Testing 156.0.8078.47, Load 14 → 7):**
+Funktionen **93/93**, Audit **52/52** hell und **52/52** dunkel, keine Wiederholung nötig. Lighthouse:
 
-**Lokal auf dem belasteten Rechner:** Audit 360 px bis zur Artikelseite ohne Befund, danach Puppeteer-Abbruch (Abschnitt 11);
-massgebend sind die CI-Läufe oben.
+| Seite | Desktop (Leistung / Barrierefreiheit / Best Practices / SEO) | Mobil | LCP mobil |
+| --- | --- | --- | --- |
+| `/` | 100 / 100 / 100 / 66 | **95** / 100 / 100 / 66 | 3.0 s |
+| `/rechtsgebiete/` | 100 / 100 / 100 / 66 | 100 / 100 / 100 / 66 | 0.9 s |
+| `/publikationen/der-mann-ohne-eigenschaften/` | 100 / 100 / 100 / 63 | 100 / 100 / 100 / 63 | 1.5 s |
+| `/kontakt/` | 100 / 100 / 100 / 63 | 100 / 100 / 100 / 63 | 0.9 s |
+
+Einziger nicht bestandener Lighthouse-Punkt ist `is-crawlable` (gewollt: Demo ist `noindex`). `label-content-name-mismatch` ist weg.
+Der mobile LCP der Startseite (simuliertes langsames 4G) liegt mit 3.0 s über dem Ziel von 2.5 s: Das Portrait teilt sich die
+simulierte Bandbreite mit den vorgeladenen Schriften (jetzt 259 KB statt 342 KB). Weitere Hebel wären eine kleinere aufrechte
+Newsreader-Datei ohne optische Grösse (minus 74 KB, Preis: Titelzeichnung) oder kein Vorladen der Schriften (Preis: sichtbarer
+Schriftwechsel); beides bewusst nicht umgesetzt.
+
+**Lokal auf dem belasteten Rechner (Load über 30):** Audit 360 px bis zur Artikelseite ohne Befund, danach Puppeteer-Abbruch
+(Abschnitt 11); massgebend sind die CI-Läufe und die Live-Läufe oben.
